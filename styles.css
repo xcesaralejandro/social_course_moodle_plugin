@@ -1,1 +1,24 @@
-﻿
+﻿#publications #create-publication{
+    border: 1px solid #dfdfdf;
+    background: white !important;
+    border-radius: 4px;
+}
+
+#publications .v-text-field__details{
+    display: none !important;
+}
+
+#publications .btn-publicar{
+    background: #1177d1 !important;
+    color: white !important;
+}
+
+#publications .btn-publicar:focus{
+    background: #1177d1 !important;
+    color: white !important;
+}
+
+#publications .recipients-button{
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+}

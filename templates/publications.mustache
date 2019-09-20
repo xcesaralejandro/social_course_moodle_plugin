@@ -1,3 +1,69 @@
-<div id="app">
-    <h1 v-text="content"></h1>
+<div id="publications">
+  <v-app>
+    <v-content>
+      <v-container>
+        <v-layout row>
+          <v-flex xs8 pa-2>
+            <v-layout column id="create-publication" pa-4>
+              <v-flex pb-2>
+                <span class="title">Nueva publicación</span>
+              </v-flex>
+              <v-flex>
+              <v-textarea
+                outlined
+                :auto-grow="true"
+                :row-height="4"
+                label="¿Que tienes en mente?"
+                v-model="publication.content"
+              ></v-textarea>
+              </v-flex>
+              <v-flex>Agregar imagen</v-flex>
+              <v-flex d-flex justify-end>
+                  <v-btn small outlined @click="selecting_recipients = true">Publico</v-btn>
+                  <v-btn small class="btn-publicar ml-2">Publicar</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex xs4 pa-2>
+          Filtros
+          {{! Filters }}
+          </v-flex>
+        </v-layout>
+
+        <template>
+  <v-row justify="center">
+    <v-dialog v-model="selecting_recipients" persistent max-width="500px">
+      <v-card>
+        <v-card-title d-flex justify-center>
+          <span class="headline">¿Quienes deberian ver esto?</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-select
+                  :items="preselections"
+                  label="Pre-selección"
+                ></v-select>
+              </v-col>
+              <v-col>
+                <v-select
+                  :items="groups"
+                  label="Grupos"
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="blue darken-1" text @click="selecting_recipients = false">Guardar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+</template>
+      </v-container>
+    </v-content>
+  </v-app>
 </div>

@@ -109,7 +109,6 @@
         <KEY NAME="sc_likes_user" TYPE="foreign" FIELDS="sc_author" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>
       <INDEXES>
-        <INDEX NAME="sc_liked" UNIQUE="false" FIELDS="sc_liked" HINTS="scliked"/>
         <INDEX NAME="sc_component" UNIQUE="false" FIELDS="sc_component" HINTS="sccomponent"/>
       </INDEXES>
     </TABLE>

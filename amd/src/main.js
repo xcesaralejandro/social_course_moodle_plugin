@@ -11,10 +11,17 @@ function(Vue, Vuetify, Axios, Moment) {
     Vue.use(Vuetify)
     new Vue({
       delimiters: ["[[", "]]"],
-      el: "#app",
+      el: "#publications",
       vuetify: new Vuetify(),
       data: {
-          content : content
+        selecting_recipients : false,
+        groups : ['Todos','ex1', 'ex2'],
+        preselections : ['Todos','Profesores','Estudiantes'],
+        publication : {
+          content : '',
+          images : [],
+          resources : [],
+        }
       },
     });
   }

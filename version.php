@@ -8,7 +8,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2019091500;
+$plugin->version   = 2019091501;
 $plugin->requires  = 2015111610;
 $plugin->component = 'local_social_course';
 $plugin->maturity  = MATURITY_ALPHA;
