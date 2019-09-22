@@ -1,6 +1,8 @@
 <?php 
   class local_social_course_publication{
-    const  USER_FIELDS = "u.id, u.username, u.firstname, u.lastname, u.email, u.lastaccess, u.picture";
+    const TEACHER_ROLES = array(3);
+    const STUDENT_ROLES = array(5);
+    const  USER_FIELDS = "u.id, u.username, u.firstname, u.lastname, u.email, u.lastaccess";
     public $course;
     public $context;
     public $user;
