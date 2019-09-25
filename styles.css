@@ -38,6 +38,11 @@
     border-radius: 0 !important;
 }
 
+#publications .btn-share-with i{
+    font-size: 1.4rem !important;
+}
+
+
 #publications .recipients-button{
     border: 1px solid #dfdfdf;
     border-radius: 4px;
@@ -69,7 +74,7 @@
     font-size: 1.4rem;
     width: 100% !important;
     height: 100% !important;
-    padding-top: 2px;
+    padding-top: 3px;
     color: #99a1a9 !important;
 }
 

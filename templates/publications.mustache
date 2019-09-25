@@ -32,7 +32,8 @@
                   <v-file-input class="pa-0 ma-0" @change="addImage" :accept="mime_types(false)" :multiple="true"
                                 prepend-icon="camera_alt"></v-file-input>
                 </v-flex>
-                <v-btn small outlined class="ml-2 btn-share-with" @click="selecting_recipients = true">Publico</v-btn>
+                <v-btn small outlined class="ml-2 btn-share-with" @click="selecting_recipients = true">
+                <v-icon class="mr-1">public</v-icon> Todos</v-btn>
                 <v-btn small class="btn-publicar ml-2">Publicar</v-btn>
               </v-flex>
             </v-layout>
