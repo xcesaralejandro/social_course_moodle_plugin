@@ -27,8 +27,7 @@
   function local_social_course_render_styles(){
     global $PAGE;
     $PAGE->requires->css('/local/social_course/css/googlefonts.css');
-    $PAGE->requires->css('/local/social_course/css/materialicon.css');
-    $PAGE->requires->css('/local/social_course/css/materialdesignicons.css');
+    $PAGE->requires->css('/local/social_course/css/materialicons.css');
     $PAGE->requires->css('/local/social_course/css/vuetify.css');
     $PAGE->requires->css('/local/social_course/styles.css');
   }

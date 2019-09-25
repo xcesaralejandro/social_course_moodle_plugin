@@ -17,10 +17,23 @@
                 v-model="publication.content"
               ></v-textarea>
               </v-flex>
-              <v-flex>Agregar imagen</v-flex>
-              <v-flex d-flex justify-end>
-                  <v-btn small outlined @click="selecting_recipients = true">Publico</v-btn>
-                  <v-btn small class="btn-publicar ml-2">Publicar</v-btn>
+
+              <v-layout v-if="publication.images.length > 0" id="preview-image-container" class="mb-4" d-flex justify-center>
+                <v-flex v-for="(image, index, key) in publication.images" class="ma-1 image-container" :key="key">
+                  <v-layout class="delete-image" @click="remove_image(index)">
+                    <v-icon>close</v-icon>
+                  </v-layout>
+                    <img :src="image" width="150" heigth="150"/>
+                </v-flex>
+              </v-layout>
+
+              <v-flex d-flex justify-end class="action-separator">
+                <v-flex id="image-input">
+                  <v-file-input class="pa-0 ma-0" @change="addImage" :accept="mime_types(false)" :multiple="true"
+                                prepend-icon="camera_alt"></v-file-input>
+                </v-flex>
+                <v-btn small outlined class="ml-2 btn-share-with" @click="selecting_recipients = true">Publico</v-btn>
+                <v-btn small class="btn-publicar ml-2">Publicar</v-btn>
               </v-flex>
             </v-layout>
           </v-flex>
