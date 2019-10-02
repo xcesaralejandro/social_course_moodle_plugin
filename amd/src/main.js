@@ -9,12 +9,6 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
   "use strict";
   
   function init(content) {
-    $(function(){
-      $(".emoji-picker").emojioneArea({
-        pickerPosition: "right",
-        tonesStyle: "bullet",
-      });
-    })
     Vue.use(Vuetify)
     Vue.config.productionTip = false;
 
@@ -32,6 +26,13 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
           resources : [],
           errors : []
         }
+      },
+      mounted() {
+          $(".emoji-picker").emojioneArea({
+            pickerPosition: "right",
+            tonesStyle: "bullet",
+            placeholder: "¿Que tienes en mente?"
+          });
       },
       methods : {
         mime_types(joined){

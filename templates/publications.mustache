@@ -9,8 +9,8 @@
                 <span class="title">Nueva publicación</span>
               </v-flex>
               <v-flex>
-              <v-textarea class="emoji-picker mb-5" outlined :auto-grow="true" :row-height="4"
-                label="¿Que tienes en mente?" v-model="publication.content"></v-textarea>
+              <textarea class="emoji-picker mb-5" outlined row="4"
+                v-model="publication.content"></textarea>
               </v-flex>
 
               <v-flex v-if="publication.images.length > 0" id="preview-image-container" class="mb-4 d-flex" >

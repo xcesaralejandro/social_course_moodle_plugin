@@ -12,13 +12,15 @@ define([],function() {
       "axios" : M.cfg.wwwroot + '/local/social_course/js/axios',
       "moment" : M.cfg.wwwroot + '/local/social_course/js/moment',
       "emojionearea" : M.cfg.wwwroot + '/local/social_course/js/emojionearea',
+      "jquerytextcomplete" : M.cfg.wwwroot + '/local/social_course/js/jquerytextcomplete',
     },
     shim: {
       'vue' : {exports: 'vue'},
       'vuetify': {deps: ['vue'] , exports: 'vuetify'},
       'axios': {exports: 'axios'},
       'moment': {deps: ['vue'] , exports: 'moment'},
-      'emojionearea': { exports: 'emojionearea'},
+      'jquerytextcomplete': {exports: 'jquerytextcomplete'},
+      'emojionearea': { deps: ['jquerytextcomplete'], exports: 'emojionearea'},
     }
   });
 });
