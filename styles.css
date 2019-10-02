@@ -79,7 +79,10 @@
 }
 
 #publications #preview-image-container{
-    overflow-x: scroll;
+    max-height: 250px;
+    overflow-y: scroll;
+    background: #eeeeee;
+    border: 1px solid #ccc;
 }
 
 #publications .image-container{
@@ -95,6 +98,7 @@
 #publications .image-container img{
     width: 100%;
     height: 100%;
+    border: 1px solid #888888;
 }
 
 #publications .delete-image{
@@ -112,4 +116,9 @@
     opacity: 1;
     color: #444444 !important;
     cursor: pointer !important;
+}
+
+#publications .emojionearea .emojionearea-editor{
+    width: 100% !important;
+    height: 100% !important;
 }

@@ -1,14 +1,23 @@
-define(["local_social_course/vue", 
+define(["jquery",
+        "local_social_course/vue", 
         "local_social_course/vuetify", 
         "local_social_course/axios",
         "local_social_course/moment",
+        "local_social_course/emojionearea",
       ], 
-function(Vue, Vuetify, Axios, Moment) {
+function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
   "use strict";
   
   function init(content) {
-    console.log("content", content)
+    $(function(){
+      $(".emoji-picker").emojioneArea({
+        pickerPosition: "right",
+        tonesStyle: "bullet",
+      });
+    })
     Vue.use(Vuetify)
+    Vue.config.productionTip = false;
+
     new Vue({
       delimiters: ["[[", "]]"],
       el: "#publications",
@@ -36,7 +45,7 @@ function(Vue, Vuetify, Axios, Moment) {
         addImage(files){
           console.log(files)
           files.forEach((file) => {
-            this.publication.images.push(URL.createObjectURL(file))
+            this.publication.images.unshift(URL.createObjectURL(file))
           })
         },
         remove_image(index){

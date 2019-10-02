@@ -11,12 +11,14 @@ define([],function() {
       "vuetify" : M.cfg.wwwroot + '/local/social_course/js/vuetify',
       "axios" : M.cfg.wwwroot + '/local/social_course/js/axios',
       "moment" : M.cfg.wwwroot + '/local/social_course/js/moment',
+      "emojionearea" : M.cfg.wwwroot + '/local/social_course/js/emojionearea',
     },
     shim: {
       'vue' : {exports: 'vue'},
       'vuetify': {deps: ['vue'] , exports: 'vuetify'},
       'axios': {exports: 'axios'},
       'moment': {deps: ['vue'] , exports: 'moment'},
+      'emojionearea': { exports: 'emojionearea'},
     }
   });
 });

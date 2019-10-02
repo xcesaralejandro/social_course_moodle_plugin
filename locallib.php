@@ -28,6 +28,7 @@
     global $PAGE;
     $PAGE->requires->css('/local/social_course/css/googlefonts.css');
     $PAGE->requires->css('/local/social_course/css/materialicons.css');
+    $PAGE->requires->css('/local/social_course/css/emojionearea.min.css');
     $PAGE->requires->css('/local/social_course/css/vuetify.css');
     $PAGE->requires->css('/local/social_course/styles.css');
   }
