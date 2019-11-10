@@ -1,0 +1,135 @@
+﻿#publications ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#publications ::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+#publications ::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+#publications ::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+#publications #create-publication{
+    border: 1px solid #dfdfdf;
+    background: white !important;
+    border-radius: 4px;
+}
+
+#publications .v-text-field__details{
+    display: none !important;
+}
+
+#publications .btn-publicar{
+    color: #0087ff !important;
+    background: white !important;
+    border-radius: 0px;
+    border: 1px solid #0087ff;
+    box-shadow: none !important;
+}
+
+#publications .btn-share-with{
+    border-color: #99a1a9;
+    color: #6a7177;
+    border-radius: 0 !important;
+}
+
+#publications .btn-share-with i{
+    font-size: 1.4rem !important;
+}
+
+
+#publications .recipients-button{
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+}
+
+#publications #image-input .v-input__control{
+    display: none !important;
+}
+
+#publications #image-input .v-input__prepend-outer{
+    margin: 0 !important;
+}
+
+#publications #image-input{
+    flex: 0 0 0 !important;
+    border: 1px dashed #99a1a9;
+    transition: all .3s ease;
+}
+#publications #image-input:hover{
+    background: #f9f9fa;
+}
+
+#publications #image-input .v-input__icon.v-input__icon--prepend{
+    width: 44px !important;
+    height: 24px !important;
+}
+
+#publications #image-input .v-input__prepend-outer i{
+    font-size: 1.4rem;
+    width: 100% !important;
+    height: 100% !important;
+    padding-top: 3px;
+    color: #99a1a9 !important;
+}
+
+#publications #preview-image-container{
+    max-height: 250px;
+    overflow-y: scroll;
+    background: #eeeeee;
+    border: 1px solid #ccc;
+}
+
+#publications .image-container{
+    min-width: 150px;
+    min-height: 100px;
+    height: 150px;
+    width: 100px;
+    max-width: 150px;
+    max-height: 100px;
+    position: relative;
+}
+
+#publications .image-container img{
+    width: 100%;
+    height: 100%;
+    border: 1px solid #888888;
+}
+
+#publications .delete-image{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.7);
+    border-left: 5px solid white;
+    border-bottom: 5px solid white;
+    transition: all .5s ease;
+    text-align: right;
+}
+
+#publications .delete-image i{
+    opacity: 1;
+    color: #444444 !important;
+    cursor: pointer !important;
+}
+
+#publications .emojionearea .emojionearea-editor{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#publications .floating-button-secondary{
+    outline: none !important;
+    background: white !important;
+    color: #6a7177 !important;
+    border-radius: 0 !important;
+    background-color: white !important;
+    box-shadow: none !important;
+    border: 1px solid #6a7177 !important;
+    border-radius: 50% !important;
+}

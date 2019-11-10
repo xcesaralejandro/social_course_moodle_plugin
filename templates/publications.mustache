@@ -1,0 +1,111 @@
+<div id="publications">
+  <v-app>
+    <v-content>
+      <v-container>
+        <v-layout row>
+          <v-flex xs8 pa-2>
+            <v-layout column id="create-publication" pa-4>
+              <v-flex pb-2>
+                <span class="title">Nueva publicación</span>
+              </v-flex>
+              <v-flex>
+              <textarea id="comment-publication" class="emoji-picker" outlined></textarea>
+              </v-flex>
+              <v-flex v-if="publication.new.images.length > 0" id="preview-image-container" 
+                      class="mb-4 d-flex pa-2" >
+                  <v-layout v-for="(image, index, key) in publication.new.images" class="ma-1 image-container" 
+                            :key="key">
+                      <v-flex class="delete-image" @click="remove_image(index)">
+                        <v-icon>close</v-icon>
+                      </v-flex>
+                      <img :src="image" width="150" heigth="150"/>
+                  </v-layout>
+              </v-flex>
+
+              <v-flex d-flex justify-end class="action-separator">
+                <v-flex id="image-input">
+                  <v-file-input class="pa-0 ma-0" @change="addImage" :accept="mime_types(false)" :multiple="true"
+                                prepend-icon="camera_alt"></v-file-input>
+                </v-flex>
+                <v-btn small outlined class="ml-2 btn-share-with" @click="recipient.selecting = true">
+                  <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon> 
+                  <v-icon v-if="selecting_group()" class="mr-1">people</v-icon>
+                  <v-icon v-if="selecting_custom()" class="mr-1">settings_applications</v-icon>
+                  <span v-text="selection_name"></span>
+                </v-btn>
+                <v-btn small class="btn-publicar ml-2" @click="publishing()" 
+                      >Publicar</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-flex>
+          <v-flex xs4 pa-2>
+          Filtros
+          {{! Filters }}
+          </v-flex>
+        </v-layout>
+
+        <template>
+          <v-row justify="center">
+            <v-dialog v-model="recipient.selecting" persistent max-width="500px">
+              <v-card>
+                <v-card-title d-flex justify-center>
+                  <span class="headline">¿Quienes deberian ver esto?</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="5">
+                        <v-select item-text="name" item-value="id" :items="available_roles" v-model="role.selected" 
+                                  label="Roles"></v-select>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-select item-text="name" item-value="id" :items="groups" v-model="group.selected" label="Grupos" 
+                                  item-text="name" item-value="idnumber"></v-select>
+                      </v-col>
+                      <v-col cols="2" class="d-flex align-center">
+                        <v-btn class="mx-2 floating-button-secondary" fab dark small color="primary" 
+                               @click="select_recipients_from_filters()">
+                          <v-icon dark>done_all</v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="6">
+                        <v-text-field placeholder="Buscar..." v-model="search">
+                          <v-icon slot="append" color="gray">search</v-icon>
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+
+                    <v-list subheader class="people-container">
+                      <v-list-item v-for="(person, index, key) in recipients" :key="key" @click="update_recipient(person)">
+                        <v-list-item-avatar>
+                          <v-img :src="person.pictureurl"></v-img>
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                          <v-list-item-title>
+                          <span v-text="person.firstname"></span>
+                          <span v-text="person.lastname"></span>
+                          </v-list-item-title>
+                        </v-list-item-content>
+                        <v-list-item-icon>
+                          <i class="material-icons" v-if="person.is_recipient">done</i>
+                          <i class="material-icons" v-else>add</i>
+                        </v-list-item-icon>
+                      </v-list-item>
+                    </v-list>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-flex class="text-center" v-html="recipients_summary()"></v-flex>
+                  <div class="flex-grow-1"></div>
+                  <v-btn color="blue darken-1" text @click="recipient.selecting = false">Cerrar</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+        </template>
+      </v-container>
+    </v-content>
+  </v-app>
+</div>
