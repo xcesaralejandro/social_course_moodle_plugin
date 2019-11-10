@@ -1,7 +1,5 @@
 <?php 
   class local_social_course_core{
-    const TEACHER_ROLES = array(3);
-    const STUDENT_ROLES = array(5);
     const  USER_FIELDS = "u.id, u.username, u.firstname, u.lastname, u.email, u.lastaccess";
     protected $course;
     protected $context;

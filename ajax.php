@@ -47,7 +47,11 @@
   function local_social_course_create_publication($courseid, $userid, $comment, $recipients,
                                                   $groupid_share, $roleid_share, $type_share,
                                                   $name_share){
-    $share = new local_social_course_share($name_share, $type_share, $roleid_share, $groupid_share);
+    $share = new local_social_course_share();
+    $share->name = $name_share;
+    $share->groupid = $groupid_share;
+    $share->roleid = $roleid_share;
+    $share->type = $type_share;
     $publication = new local_social_course_publication();
     $publication->courseid = $courseid;
     $publication->authorid = $userid;

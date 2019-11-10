@@ -1,17 +1,10 @@
 <?php 
 class local_social_course_share{
 
-  private $name;
-  private $groupid;
-  private $roleid;
-  private $type;
-
-  public function __construct($name, $type, $roleid, $groupid){
-    $this->name = $name;
-    $this->type = $type;
-    $this->roleid = $roleid;
-    $this->groupid = $groupid;
-  }
+  public $name;
+  public $groupid;
+  public $roleid;
+  public $type;
 
   public function get(){
     $shared = new stdClass();

@@ -18,26 +18,61 @@
     public static function find($publicationid){
       global $DB;
 
-    }
+   }
 
     public static function created_by($userid, $courseid){
-      $publications = self::get_publications($userid, $courseid);
+      $publications = [];
+      $records = self::get_publications($userid, $courseid);
+      foreach($records as $record){
+        $share = new local_social_course_share();
+        $share->name = $record->sc_name_shared;
+        $share->groupid = $record->sc_groupid_shared;
+        $share->roleid = $record->sc_roleid_shared;
+        $share->type = $record->sc_type_shared; 
+        $publication = new local_social_course_publication();
+        $publication->id = $record->id; 
+        $publication->courseid = $record->sc_courseid;
+        $publication->authorid = $record->sc_authorid;
+        $publication->comment = $record->sc_comment;
+        $publication->share = $share->get();
+        $publication->lazy_loading();
+        array_push($publications, $publication->get());
+      }
       return $publications;
     }
 
-    public static function get_publications ($userid, $courseid, $take = 10, $startid = null){
+    public static function get_publications ($userid, $courseid, $startid = null){
       global $DB;
+      $take = get_config('local_social_course', 'maxrecordsperquery');
       $params = array($userid, $courseid);
       $query_fragment = "";
       if(!empty($startid)){
-        $query_fragment = ' and id <= ?';
+        $query_fragment = ' and id <= ? ';
         array_push($params, $startid); 
       }
-      $sql = "select * from {sc_publications} where sc_authorid = ? and sc_courseid = ? $query_fragment
-              order by id desc";
-      $results = $DB->get_records_sql($sql, $params, null, $take);
-      dd($results);
-      return $results;
+      $sql = "select * from {sc_publications} where sc_authorid = ? and sc_courseid = ? 
+              and sc_timedeleted IS NULL $query_fragment order by id desc";
+      $publications = $DB->get_records_sql($sql, $params, null, $take);
+      return $publications;
+    }
+
+    public function lazy_loading(){
+      self::set_comments();
+    }
+
+    private function set_recipients(){
+
+    }
+
+    private function set_attachments(){
+      
+    }
+
+    private function set_comments(){
+      $visible_comments = get_config('local_social_course', 'visiblecomments');
+      if($visible_comments > 0){
+        $this->comments = local_social_course_comment::get_all_from_publication($this->id, $visible_comments);
+      }
     }
 
     public static function shared_with($userid){
@@ -73,18 +108,8 @@
       $publication->sc_name_shared = $this->share->name;
       $id = $DB->insert_record("sc_publications", $publication, true);
       $this->id = $id;
-      self::make_author_recipient();
       $publication = self::get();
       return $publication;
-    }
-
-    private function make_author_recipient(){
-      $recipient = new local_social_course_recipient();
-      $recipient->recipientid = $this->authorid;
-      $recipient->publicationid = $this->id;
-      $recipient->save();
-      $recipient = $recipient->get();
-      array_push($this->recipients, $recipient);
     }
 
     private function validate_properties(){

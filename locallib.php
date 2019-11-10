@@ -1,5 +1,9 @@
 <?php
-  require_once(dirname(__FILE__).'/../../config.php');
+  require_once(dirname(__FILE__) . '/../../config.php');
+  
+  define('MAX_RECORDS_PER_QUERY', 15);
+  define('AJAX_POLLING_SECONDS', 30);
+  define('VISIBLE_COMMENTS', 3);
 
   function dd($var){
     print_object($var);
