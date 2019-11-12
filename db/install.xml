@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/social_course/db" VERSION="20191101" COMMENT="XMLDB file for Moodle local/social_course"
+<XMLDB PATH="local/social_course/db" VERSION="20191112" COMMENT="XMLDB file for Moodle local/social_course"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -62,12 +62,17 @@
         <FIELD NAME="sc_roleid_shared" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="id of role selected in preselection"/>
         <FIELD NAME="sc_type_shared" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="all, group, custom"/>
         <FIELD NAME="sc_name_shared" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="sc_timecreated" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="sc_timedeleted" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="sc_publications_course" TYPE="foreign" FIELDS="sc_courseid" REFTABLE="course" REFFIELDS="id"/>
         <KEY NAME="sc_publications_user" TYPE="foreign" FIELDS="sc_authorid" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>
+      <INDEXES>
+        <INDEX NAME="sc_timecreated" UNIQUE="false" FIELDS="sc_timecreated" HINTS="sctimecreated"/>
+      </INDEXES>
     </TABLE>
     <TABLE NAME="sc_module_mentions" COMMENT="The platform modules that have been mentioned">
       <FIELDS>
