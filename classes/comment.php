@@ -36,10 +36,10 @@
         $limit = get_config("local_social_course", "maxrecordsperquery");
       }
       global $DB;
-      $sql = "select c.*, u.username, u.firstname, u.lastname, u.email, u.lastaccess (select lsl.timecreated 
+      $sql = "select c.*, u.username, u.firstname, u.lastname, u.email, u.lastaccess, (select lsl.timecreated 
               from {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1) 
               as author_last_action from {user} u, {sc_comments} c where u.id = c.sc_authorid and 
-              sc_publicationid = ? order by c.timecreated desc";
+              sc_publicationid = ? order by c.sc_timecreated desc";
       $comments = $DB->get_records_sql($sql, array($publicationid), null, $limit);
       $comments = array_values($comments);
       return $comments;
