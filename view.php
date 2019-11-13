@@ -8,13 +8,16 @@
     $url = "/local/social_course/view.php";
     local_social_course_set_page($course, $url);
     $core = new local_social_course_core($COURSE->id, $USER->id);
-    local_social_course_publication::created_by($USER->id, $COURSE->id);
+    $publications = new stdClass();
+    $publications->mine = local_social_course_publication::created_by($USER->id, $COURSE->id);
+    $publications->shared_with_me = local_social_course_publication::shared_with($USER->id, $COURSE->id);
     $content = array(
         "enrolled" => $core->get_enrolled(),
         "groups" => $core->get_groups(),
         "available_roles" => $core->get_availables_roles(),
         "user" => $USER,
         "course" => $COURSE,
+        "publications" => $publications,
         "strings" => [
         ],
     );
