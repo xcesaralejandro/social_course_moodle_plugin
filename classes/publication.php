@@ -50,14 +50,14 @@
         $query_fragment = ' and id <= ? ';
         array_push($params, $startid); 
       }
-      $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid, p.sc_authorid as author_id, 
+      $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid,
               p.sc_comment as publication_comment, p.sc_groupid_shared as publication_groupid_shared, 
               p.sc_roleid_shared as publication_roleid_shared, p.sc_type_shared as publication_type_shared,
               p.sc_name_shared as publication_name_shared, p.sc_timecreated as publication_timecreated,
-              u.username as author_username, u.firstname as author_firstname, u.lastname as author_lastname, 
-              u.email as author_email, (select lsl.timecreated from {logstore_standard_log} lsl where 
-              lsl.userid = u.id order by lsl.timecreated desc limit 1) as author_last_action, 
-              u.lastaccess as author_lastaccess from {sc_publications} p, {user} u where 
+              p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname, 
+              u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from 
+              {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1) 
+              as author_last_action, u.lastaccess as author_lastaccess from {sc_publications} p, {user} u where 
               p.sc_authorid = u.id and p.sc_authorid = ? and p.sc_courseid = ? and p.sc_timedeleted IS NULL 
               $query_fragment order by p.sc_timecreated desc";
       $publications = $DB->get_records_sql($sql, $params, null, $take);
@@ -92,19 +92,18 @@
         $start_in_id = ' and id <= ? ';
         array_push($params, $startid); 
       }
-      $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid, p.sc_authorid as author_id,
+      $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid, 
               p.sc_comment as publication_comment, p.sc_groupid_shared as publication_groupid_shared,
               p.sc_roleid_shared as publication_roleid_shared, p.sc_type_shared as publication_type_shared,
               p.sc_name_shared as publication_name_shared, p.sc_timecreated as publication_timecreated,
-              u.username as author_username, u.firstname as author_firstname, u.lastname as author_lastname,
-              u.email as author_email, (select lsl.timecreated from {logstore_standard_log} lsl where 
-              lsl.userid = u.id order by lsl.timecreated desc limit 1) as author_last_action, 
-              u.lastaccess as author_lastaccess from {sc_publications} p, {user} u, {sc_recipients} r where 
-              p.sc_authorid = u.id and p.id = r.sc_publicationid and p.sc_authorid = ? and p.sc_courseid = ? 
-              and r.sc_to = ? and r.sc_timedeleted IS NULL and p.sc_timedeleted IS NULL $start_in_id order by 
-              p.sc_timecreated desc";
+              p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname, 
+              u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from 
+              {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1) 
+              as author_last_action, u.lastaccess as author_lastaccess from {sc_publications} p, {user} u, 
+              {sc_recipients} r where p.sc_authorid = u.id and p.id = r.sc_publicationid and p.sc_authorid = ? 
+              and p.sc_courseid = ? and r.sc_to = ? and r.sc_timedeleted IS NULL and p.sc_timedeleted IS NULL
+              $start_in_id order by p.sc_timecreated desc";
       $publications = $DB->get_records_sql($sql, $params, null, $take);
-      dd($publications);
       return $publications;
     }
     
