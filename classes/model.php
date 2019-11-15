@@ -3,8 +3,8 @@ class local_social_course_model{
   protected $classname;
   protected $fillable;
   protected $obtainable;
-  const MUTATOR_FUNCTION_PREFIX = "get_";
-  const ACCESOR_FUNCTION_PREFIX = "set_";
+  const MUTATOR_FUNCTION_PREFIX = "set_";
+  const ACCESOR_FUNCTION_PREFIX = "get_";
 
   function __construct(){
     $this->fillable = [];
@@ -18,7 +18,7 @@ class local_social_course_model{
     foreach($this->fillable as $property){
       $property_exist = isset($params[$property]); 
       if($property_exist){
-        $method = self::ACCESOR_FUNCTION_PREFIX . $property; 
+        $method = self::MUTATOR_FUNCTION_PREFIX . $property; 
         if(method_exists($this->classname, $method)){
           $this->$property = $this->classname::$method($params[$property]);
         }else{
@@ -35,11 +35,12 @@ class local_social_course_model{
       if($property_exist){
         $method = self::ACCESOR_FUNCTION_PREFIX . $property; 
         if(method_exists($this->classname, $method)){
-          $this->$property = $this->classname::$method($params[$property]);
+          $response->$property = $this->classname::$method($this->$property);
         }else{
-          $this->$property = $params[$property];
+          $response->$property = $this->$property;
         }
       }
     }
+    return $response;
   }
 }
