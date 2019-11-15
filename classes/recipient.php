@@ -12,10 +12,6 @@ class local_social_course_recipient extends local_social_course_model{
     $this->obtainable = ['id','recipientid','publicationid','timecreated'];
   }
 
-  // public static function get_recipientid($value){
-  //   return $value . "la bolaita perrroooooooooooooo";
-  // }
-
   public static function all($publicationid){
     global $DB;
     $sql = "select u.id, u.username, u.firstname, u.lastname, u.email, u.lastaccess,
