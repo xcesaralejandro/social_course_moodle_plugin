@@ -1,5 +1,5 @@
 <?php 
-class local_social_course_author{
+class local_social_course_person{
 
   public $id;
   public $username;
@@ -7,6 +7,7 @@ class local_social_course_author{
   public $lastname;
   public $email;
   public $lastaccess;
+  public $lastaction;
 
   public function get(){
     $author = new stdClass();
@@ -16,6 +17,7 @@ class local_social_course_author{
     $author->lastname = $this->lastname;
     $author->email = $this->email;
     $author->lastaccess = $this->lastaccess;
+    $author->lastaction = $this->lastaction;
     return $author;
   }
 }

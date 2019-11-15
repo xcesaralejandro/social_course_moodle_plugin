@@ -11,6 +11,7 @@
     $publications = new stdClass();
     $publications->mine = local_social_course_publication::created_by($USER->id, $COURSE->id);
     $publications->shared_with_me = local_social_course_publication::shared_with($USER->id, $COURSE->id);
+    dd($publications->mine);
     $content = array(
         "enrolled" => $core->get_enrolled(),
         "groups" => $core->get_groups(),

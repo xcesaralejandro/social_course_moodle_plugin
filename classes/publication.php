@@ -17,31 +17,9 @@
     
     public static function find($publicationid){
       global $DB;
-
    }
 
-    public static function created_by($userid, $courseid){
-      $publications = [];
-      $records = self::get_publications($userid, $courseid);
-      foreach($records as $record){
-        $share = new local_social_course_share();
-        $share->name = $record->publication_name_shared;
-        $share->groupid = $record->publication_groupid_shared;
-        $share->roleid = $record->publication_roleid_shared;
-        $share->type = $record->publication_type_shared; 
-        $publication = new local_social_course_publication();
-        $publication->id = $record->publication_id; 
-        $publication->courseid = $record->publication_courseid;
-        $publication->authorid = $record->author_id;
-        $publication->comment = $record->publication_comment;
-        $publication->share = $share->get();
-        $publication->lazy_loading();
-        array_push($publications, $publication->get());
-      }
-      return $publications;
-    }
-
-    public static function get_publications ($userid, $courseid, $startid = null){
+    public static function created_by ($userid, $courseid, $startid = null){
       global $DB;
       $take = get_config('local_social_course', 'maxrecordsperquery');
       $params = array($userid, $courseid);
@@ -51,36 +29,18 @@
         array_push($params, $startid); 
       }
       $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid,
-              p.sc_comment as publication_comment, p.sc_groupid_shared as publication_groupid_shared, 
-              p.sc_roleid_shared as publication_roleid_shared, p.sc_type_shared as publication_type_shared,
-              p.sc_name_shared as publication_name_shared, p.sc_timecreated as publication_timecreated,
+              p.sc_comment as publication_comment, p.sc_groupid_shared as share_groupid, 
+              p.sc_roleid_shared as share_roleid, p.sc_type_shared as share_type,
+              p.sc_name_shared as share_name, p.sc_timecreated as publication_timecreated,
               p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname, 
               u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from 
               {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1) 
               as author_last_action, u.lastaccess as author_lastaccess from {sc_publications} p, {user} u where 
               p.sc_authorid = u.id and p.sc_authorid = ? and p.sc_courseid = ? and p.sc_timedeleted IS NULL 
               $query_fragment order by p.sc_timecreated desc";
-      $publications = $DB->get_records_sql($sql, $params, null, $take);
+      $rows = $DB->get_records_sql($sql, $params, null, $take);
+      $publications = self::transform_to_classes($rows);
       return $publications;
-    }
-
-    public function lazy_loading(){
-      self::set_comments();
-    }
-
-    private function set_recipients(){
-
-    }
-
-    private function set_attachments(){
-      
-    }
-
-    private function set_comments(){
-      $visible_comments = get_config('local_social_course', 'visiblecomments');
-      if($visible_comments > 0){
-        $this->comments = local_social_course_comment::get_all_from_publication($this->id, $visible_comments);
-      }
     }
 
     public static function shared_with($userid, $courseid, $startid = null){
@@ -93,9 +53,9 @@
         array_push($params, $startid); 
       }
       $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid, 
-              p.sc_comment as publication_comment, p.sc_groupid_shared as publication_groupid_shared,
-              p.sc_roleid_shared as publication_roleid_shared, p.sc_type_shared as publication_type_shared,
-              p.sc_name_shared as publication_name_shared, p.sc_timecreated as publication_timecreated,
+              p.sc_comment as publication_comment, p.sc_groupid_shared as share_groupid,
+              p.sc_roleid_shared as share_roleid, p.sc_type_shared as share_type,
+              p.sc_name_shared as share_name, p.sc_timecreated as publication_timecreated,
               p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname, 
               u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from 
               {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1) 
@@ -103,7 +63,58 @@
               {sc_recipients} r where p.sc_authorid = u.id and p.id = r.sc_publicationid and p.sc_authorid = ? 
               and p.sc_courseid = ? and r.sc_to = ? and r.sc_timedeleted IS NULL and p.sc_timedeleted IS NULL
               $start_in_id order by p.sc_timecreated desc";
-      $publications = $DB->get_records_sql($sql, $params, null, $take);
+      $rows = $DB->get_records_sql($sql, $params, null, $take);
+      $publications = self::transform_to_classes($rows);
+      return $publications;
+    }
+
+    public function lazy_loading($modules){
+      if(in_array('comments', $modules)){
+        self::set_comments();
+      }
+      if(in_array('recipients', $modules)){
+        self::set_recipients();
+      }
+      if(in_array('attachments', $modules)){
+        self::set_attachments();
+      }
+    }
+
+    private function set_recipients(){
+      $this->recipients = local_social_course_recipient::all($this->id);
+    }
+
+    private function set_attachments(){
+      
+    }
+
+    private function set_comments(){
+      $comments_number = get_config('local_social_course', 'visiblecomments');
+      if($comments_number > 0){
+        $this->comments = local_social_course_comment::all($this->id, $comments_number);
+      }
+    }
+
+    public static function transform_to_classes($rows){
+      $publications = array();
+      foreach($rows as $key => $row){
+        $share = new local_social_course_share();
+        $share->name = $row->share_name;
+        $share->groupid = $row->share_groupid;
+        $share->roleid = $row->share_roleid;
+        $share->type = $row->share_type;
+        $publication = new local_social_course_publication();
+        $publication->id = $row->publication_id;
+        $publication->courseid = $row->publication_courseid;
+        $publication->authorid = $row->author_id;
+        $publication->comment = $row->publication_comment;
+        $publication->share = $share;
+        $publication->comments = [];
+        $publication->attachments = [];
+        $publication->recipients = [];
+        $publication->lazy_loading(["comments", "attachments", "recipients"]);
+        array_push($publications,$publication);
+      }
       return $publications;
     }
     
