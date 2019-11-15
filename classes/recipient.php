@@ -1,23 +1,19 @@
 <?php 
-class local_social_course_recipient{
-  public $id;
-  public $recipientid;
-  public $publicationid;
-  public $timecreated;
-  public $timedeleted;
+class local_social_course_recipient extends local_social_course_model{
+  protected $id;
+  protected $recipientid;
+  protected $publicationid;
+  protected $timecreated;
+  protected $timedeleted;
 
   public function __construct(){
-
+    $this->classname = "local_social_course_recipient";
+    $this->fillable = ['id','recipientid','publicationid','timecreated','timedeleted'];
+    $this->obtainable = ['id','recipientid','publicationid','timecreated'];
   }
 
-  public function get(){
-    $recipient = new stdClass();
-    $recipient->id = $this->id;
-    $recipient->recipientid = $this->recipientid;
-    $recipient->publicationid = $this->publicationid;
-    $recipient->timecreated = $this->timecreated;
-    $recipient->timedeleted = $this->timedeleted;
-    return $recipient;
+  public static function get_recipientid($value){
+    return $value . "la bolaita perrroooooooooooooo";
   }
 
   public static function all($publicationid){

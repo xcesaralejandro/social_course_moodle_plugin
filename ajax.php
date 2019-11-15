@@ -56,13 +56,13 @@
     $publication->courseid = $courseid;
     $publication->authorid = $userid;
     $publication->comment = $comment;
-    $publication->share = $share->get();
+    $publication->share = $share;
     $publication->recipients;
     if($publication->save()){
       foreach($recipients as $recipientid){
         $recipient = new local_social_course_recipient();
-        $recipient->recipientid = $recipientid;
-        $recipient->publicationid = $publication->id;
+        $recipient->fill(["recipientid" => $recipientid, "publicationid" => $publication->id, 
+                          "timecreated" => time()]);
         $recipient->save();
         $recipient = $recipient->get();
         array_push($publication->recipients, $recipient);
