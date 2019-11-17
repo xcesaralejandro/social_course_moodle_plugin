@@ -1,15 +1,19 @@
 <?php 
-  class local_social_course_publication{
-    public $id;
-    public $courseid;
-    public $authorid;
-    public $comment;
-    public $share;
-    public $comments; 
-    public $attachments;
-    public $recipients;
+  class local_social_course_publication extends local_social_course_model{
+    protected $id;
+    protected $courseid;
+    protected $authorid;
+    protected $comment;
+    protected $share;
+    protected $comments; 
+    protected $attachments;
+    protected $recipients;
+    protected $fillable;
+    protected $obtainable;
 
     public function __construct(){
+      $this->fillable = ["id","courseid","authorid","comment","share","comments", "attachments","recipients"];
+      $this->obtainable = ["id","courseid","authorid","comment","share","comments", "attachments","recipients"];
       $this->attachments = array();     
       $this->recipients = array();     
       $this->comments = array();    
