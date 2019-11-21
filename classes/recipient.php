@@ -1,15 +1,31 @@
 <?php 
-class local_social_course_recipient extends local_social_course_model{
-  protected $id;
-  protected $recipientid;
-  protected $publicationid;
-  protected $timecreated;
-  protected $timedeleted;
+class local_social_course_recipient {
+  private $id;
+  private $recipientid;
+  private $publicationid;
+  private $timecreated;
+  private $timedeleted;
 
   public function __construct(){
     $this->classname = "local_social_course_recipient";
-    $this->fillable = ['id','recipientid','publicationid','timecreated','timedeleted'];
-    $this->obtainable = ['id','recipientid','publicationid','timecreated'];
+  }
+
+  public function fill($params){
+    if(gettype($params) != 'array'){
+      die("params only can be array :) ");
+    }
+    foreach($params as $field => $value){
+      if(isset($this->$field)){
+        $this->$field = $params;
+      }
+    }
+  }
+
+  public function get(){
+    $recipient = new stdClass();
+    $recipient->id = $this->id;
+    $recipient->recipientid = $this->recipientid;
+    $recipient->publicationid = $this->publicationid;
   }
 
   public static function all($publicationid){
@@ -19,11 +35,11 @@ class local_social_course_recipient extends local_social_course_model{
             order by lsl.timecreated desc limit 1) as lastaction from {sc_recipients} r, 
             {user} u where u.id = sc_to and r.sc_publicationid = ? and r.sc_timedeleted IS NULL";
     $rows = $DB->get_records_sql($sql, array($publicationid));
-    $recipients = self::transform_to_recipients($rows);
+    $recipients = self::rows_to_recipients($rows);
     return $recipients;
   }
 
-  public static function transform_to_recipients($rows){
+  public static function rows_to_recipients($rows){
     $recipients = array();
     foreach($rows as $row){
       $recipient = new local_social_course_person();
