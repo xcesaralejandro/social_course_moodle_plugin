@@ -6,17 +6,13 @@ class local_social_course_recipient {
   private $timecreated;
   private $timedeleted;
 
-  public function __construct(){
-    $this->classname = "local_social_course_recipient";
-  }
-
   public function fill($params){
     if(gettype($params) != 'array'){
-      die("params only can be array :) ");
+      print_error("params only can be array :) ");
     }
     foreach($params as $field => $value){
       if(isset($this->$field)){
-        $this->$field = $params;
+        $this->$field = $value;
       }
     }
   }

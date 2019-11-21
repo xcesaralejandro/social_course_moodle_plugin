@@ -53,11 +53,7 @@
     $share->roleid = $roleid_share;
     $share->type = $type_share;
     $publication = new local_social_course_publication();
-    $publication->courseid = $courseid;
-    $publication->authorid = $userid;
-    $publication->comment = $comment;
-    $publication->share = $share;
-    $publication->recipients;
+    $publication->fill(["courseid" => $courseid, "authorid" => $userid, "comment" => $comment, "share" => $share]);
     if($publication->save()){
       foreach($recipients as $recipientid){
         $recipient = new local_social_course_recipient();

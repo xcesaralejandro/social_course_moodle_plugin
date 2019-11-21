@@ -1,18 +1,42 @@
 <?php 
   class local_social_course_publication{
-    public $id;
-    public $courseid;
-    public $authorid;
-    public $comment;
-    public $share;
-    public $comments; 
-    public $attachments;
-    public $recipients;
+    private $id;
+    private $courseid;
+    private $authorid;
+    private $comment;
+    private $share;
+    private $comments; 
+    private $attachments;
+    private $recipients;
 
     public function __construct(){
       $this->attachments = array();     
       $this->recipients = array();     
       $this->comments = array();    
+    }
+
+    public function get(){
+      $publication = new stdClass();
+      $publication->id = $this->id;
+      $publication->courseid = $this->courseid;
+      $publication->authorid = $this->authorid;
+      $publication->comment = $this->comment;
+      $publication->share = $this->share;
+      $publication->comments = $this->comments;
+      $publication->attachments = $this->attachments;
+      $publication->recipients = $this->recipients;
+      return $publication;
+    }
+
+    public function fill($params){
+      if(gettype($params) != 'array'){
+        print_error("params only can be array :) ");
+      }
+      foreach($params as $field => $value){
+        // if(isset($this->$field)){
+          $this->$field = $value;
+        // }
+      }
     }
     
     public static function find($publicationid){
@@ -85,7 +109,7 @@
     }
 
     private function set_attachments(){
-      
+
     }
 
     private function set_comments(){
@@ -116,19 +140,6 @@
         array_push($publications,$publication);
       }
       return $publications;
-    }
-    
-    public function get(){
-      $publication = new stdClass();
-      $publication->id = $this->id;
-      $publication->courseid = $this->courseid;
-      $publication->authorid = $this->authorid;
-      $publication->comment = $this->comment;
-      $publication->share = $this->share;
-      $publication->comments = $this->comments;
-      $publication->attachments = $this->attachments;
-      $publication->recipients = $this->recipients;
-      return $publication;
     }
 
     public function save(){
