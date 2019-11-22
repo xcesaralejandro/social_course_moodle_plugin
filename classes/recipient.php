@@ -1,27 +1,15 @@
 <?php 
-class local_social_course_recipient {
-  private $id;
-  private $recipientid;
-  private $publicationid;
-  private $timecreated;
-  private $timedeleted;
+class local_social_course_recipient extends local_social_course_model{
+  protected $id;
+  protected $recipientid;
+  protected $publicationid;
+  protected $timecreated;
+  protected $timedeleted;
 
-  public function fill($params){
-    if(gettype($params) != 'array'){
-      print_error("params only can be array :) ");
-    }
-    foreach($params as $field => $value){
-      if(isset($this->$field)){
-        $this->$field = $value;
-      }
-    }
-  }
-
-  public function get(){
-    $recipient = new stdClass();
-    $recipient->id = $this->id;
-    $recipient->recipientid = $this->recipientid;
-    $recipient->publicationid = $this->publicationid;
+  public function __construct(){
+    $this->classname = "local_social_course_recipient";
+    $this->fillable = ["id","recipientid","publicationid","timecreated","timedeleted"];
+    $this->obtainable = ["id","recipientid","publicationid","timecreated","timedeleted"];
   }
 
   public static function all($publicationid){
@@ -64,6 +52,7 @@ class local_social_course_recipient {
     $id = $DB->insert_record("sc_recipients", $recipient, true);
     $this->timecreated = $now;
     $this->id = $id;
+    $recipient = self::get();
     return $recipient;
   }
 

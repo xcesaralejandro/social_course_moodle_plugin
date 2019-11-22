@@ -10,6 +10,7 @@
     protected $recipients;
 
     public function __construct(){
+      $this->classname = "local_social_course_publication";
       $this->fillable = ["id","courseid","authorid","comment","share","comments", "attachments","recipients"];
       $this->obtainable = ["id","courseid","authorid","comment","share","comments", "attachments","recipients"];
       $this->attachments = array();     

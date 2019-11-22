@@ -44,15 +44,15 @@ class local_social_course_model{
     return $response;
   }
 
-  public function getField(){
+  public function getProperty($property_name){
     $response = null;
-    $property_exist = isset($this->$property); 
+    $property_exist = isset($this->$property_name); 
     if($property_exist){
-      $method = self::ACCESOR_FUNCTION_PREFIX . $property; 
+      $method = self::ACCESOR_FUNCTION_PREFIX . $property_name; 
       if(method_exists($this->classname, $method)){
-        $response = $this->classname::$method($this->$property);
+        $response = $this->classname::$method($this->$property_name);
       }else{
-       $response = $this->$property;
+       $response = $this->$property_name;
       }
     }
     return $response;
