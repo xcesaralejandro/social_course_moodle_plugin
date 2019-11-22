@@ -53,16 +53,19 @@
     $share->roleid = $roleid_share;
     $share->type = $type_share;
     $publication = new local_social_course_publication();
-    $publication->fill(["courseid" => $courseid, "authorid" => $userid, "comment" => $comment, "share" => $share]);
+    $publication->fill(["courseid" => $courseid, "authorid" => $userid, "comment" => $comment,
+                        "share" => $share]);
     if($publication->save()){
+      $recipients = array();
       foreach($recipients as $recipientid){
         $recipient = new local_social_course_recipient();
-        $recipient->fill(["recipientid" => $recipientid, "publicationid" => $publication->id, 
+        $recipient->fill(["recipientid" => $recipientid, "publicationid" => $publication->getField("id"), 
                           "timecreated" => time()]);
         $recipient->save();
         $recipient = $recipient->get();
-        array_push($publication->recipients, $recipient);
+        array_push($recipients, $recipient);
       }
+      $publication->fill(["recipients" => $recipients]);
       $publication = $publication->get();
       $status = true;
       $message = null;
