@@ -51,3 +51,32 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json');
   }
+
+  function local_social_course_file_exist($file){
+    $file_storage = get_file_storage();
+    $exist = $file_storage->file_exists($file['contextid'], $file['component'], $file['filearea'],
+                                        $file['itemid'], $file['filepath'], $file['filename']); 
+    return $exist;
+  }
+
+  function get_local_social_course_file($courseid, $publicationid) {
+    $context = context_course::instance($courseid);
+    $fs = get_file_storage();
+    $file = $fs->get_area_files($context->id, 'local_social_course', 'social_course_attachment',
+                                 $publicationid, $sort = false, $includedirs = false);
+    if (empty($file)){
+      return false;
+    }
+    return array_shift($file);
+  }
+
+  function get_local_social_course_url($courseid, $publicationid, $forcedownload = false) {
+    $file = get_local_social_course_file($courseid, $publicationid);
+    if (!$file){
+      return false;
+    }
+    $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                                           $file->get_itemid(), $file->get_filepath(), $file->get_filename(),
+                                           $forcedownload);
+    return $url;
+}

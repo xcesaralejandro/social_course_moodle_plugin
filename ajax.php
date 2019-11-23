@@ -4,6 +4,7 @@
   require_once(dirname(__FILE__) . "/locallib.php");
   $action = optional_param('a', false ,PARAM_ALPHA);
   $courseid = optional_param('cid', false, PARAM_INT);
+  $publicationid = optional_param('pid', false, PARAM_INT);
   $userid = optional_param('uid', false, PARAM_INT);
   $comment = optional_param('c', false, PARAM_RAW);
   $recipients = optional_param('r', array(), PARAM_INT);
@@ -32,7 +33,8 @@
     array_push($params, $courseid);
     array_push($params, $userid);
     array_push($params, $image);
-    if($courseid && $image){
+    array_push($params, $publicationid);
+    if($courseid && $image && $publicationid){
       $func = "local_social_course_upload_image";
     }
   } 
@@ -76,6 +78,19 @@
     local_social_course_ajax_response(["publication" => $publication], $message, $status);
   }
 
-  function local_social_course_upload_image($courseid, $userid, $image){
-    dd($_FILES);
+  function local_social_course_upload_image($courseid, $userid, $image, $publicationid){
+    $image = new stdClass();
+    $image->path = $_FILES['image']['tmp_name'];
+    $image->name = $_FILES['image']['name'];
+    $storage = get_file_storage();
+    $context = context_course::instance($courseid);
+    $file = array('contextid' => $context->id, 'component' => 'local_social_course',
+                  'filearea' => 'social_course_attachment', 'itemid' => $publicationid,
+                  'filepath' =>"/", 'filename' => $image->name);
+    if(!local_social_course_file_exist($file)){
+      $storage->create_file_from_pathname($file, $image->path);
+    }
+    $url = get_local_social_course_url($courseid, $publicationid);
+    echo $url;
+    // local_social_course_ajax_response(["url" => $url]);
   }
