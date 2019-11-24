@@ -18,7 +18,32 @@ class local_social_course_file{
     $this->filepath = "/";
     $this->timecreated = time();
   }
-  public function find ($id){
+
+  public function get_resource($id){
+    $file = self::find($id);
+    if(!$file){
+      return false;
+    }
+    $resource = self::to_resource();
+    return $resource;
+  }
+
+  private function to_resource(){
+    $resourse = new local_social_course_resource();
+    $resource->id = $this->id;
+    $resource->name = $this->filename;
+    $resource->path = self::get_url();
+    $resource->type = $this->mimetype;
+    dd($resource);
+    return $resource;
+  }
+
+  public function get_file ($id){
+    $file = self::find($id);
+    return $file;
+  }
+
+  private function find($id){
     global $DB;
     $sql = "select * from {sc_files} where id = ? and sc_timedeleted IS NULL";
     $row = $DB->get_record_sql($sql, array($id));
@@ -57,6 +82,8 @@ class local_social_course_file{
     }else{
       return false;
     }
+    $resource = self::to_resource();
+    return $resource;
   }
 
   private function save_in_database($resource){
@@ -107,6 +134,7 @@ class local_social_course_file{
     $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
                                            $file->get_itemid(), $file->get_filepath(), $file->get_filename(),
                                            $forcedownload);
+    $url = (string) $url;
     return $url;
   }
 

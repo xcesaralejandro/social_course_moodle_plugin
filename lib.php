@@ -6,7 +6,7 @@ function local_social_course_pluginfile($course, $cm, $context, $filearea, $args
   global $CFG;
   $id = isset($args[0]) ? $args[0] : null;
   $file = new local_social_course_file();
-  $file = $file->find($id);
+  $file = $file->get_file($id);
   if (!$file){
     return false;
   } 
