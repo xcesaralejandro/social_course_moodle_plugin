@@ -91,6 +91,5 @@
       $storage->create_file_from_pathname($file, $image->path);
     }
     $url = get_local_social_course_url($courseid, $publicationid);
-    echo $url;
-    // local_social_course_ajax_response(["url" => $url]);
+    local_social_course_ajax_response(["url" => (string)$url]);
   }
