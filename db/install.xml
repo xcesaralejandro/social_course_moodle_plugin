@@ -108,6 +108,7 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="sc_publicationid" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="sc_userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="sc_contextid" TYPE="int" LENGTH="5" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="sc_component" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="sc_filearea" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false"/>
@@ -120,6 +121,7 @@
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
         <KEY NAME="sc_publicationid" TYPE="foreign" FIELDS="sc_publicationid" REFTABLE="sc_publications" REFFIELDS="id"/>
+        <KEY NAME="sc_userid" TYPE="foreign" FIELDS="sc_userid" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>
       <INDEXES>
         <INDEX NAME="sc_timecreated" UNIQUE="false" FIELDS="sc_timecreated" HINTS="sctimecreated"/>

@@ -28,14 +28,13 @@
     if($courseid && $userid && $comment && strlen($comment) > 0 && $type_share && $name_share){
       $func = "local_social_course_create_publication";
     }
-  } elseif($action == 'uploadimage'){
-    $image = isset($_FILES['image']) ? $_FILES['image'] : false;
+  } elseif($action == 'uploadresource'){
+    $image = isset($_FILES['resource']) ? $_FILES['resource'] : false;
     array_push($params, $courseid);
     array_push($params, $userid);
     array_push($params, $image);
-    array_push($params, $publicationid);
-    if($courseid && $image && $publicationid){
-      $func = "local_social_course_upload_image";
+    if($courseid && $image && $userid){
+      $func = "local_social_course_upload_resource";
     }
   } 
   
@@ -78,18 +77,11 @@
     local_social_course_ajax_response(["publication" => $publication], $message, $status);
   }
 
-  function local_social_course_upload_image($courseid, $userid, $image, $publicationid){
-    $image = new stdClass();
-    $image->path = $_FILES['image']['tmp_name'];
-    $image->name = $_FILES['image']['name'];
-    $storage = get_file_storage();
-    $context = context_course::instance($courseid);
-    $file = array('contextid' => $context->id, 'component' => 'local_social_course',
-                  'filearea' => 'social_course_attachment', 'itemid' => $publicationid,
-                  'filepath' =>"/", 'filename' => $image->name);
-    if(!local_social_course_file_exist($file)){
-      $storage->create_file_from_pathname($file, $image->path);
-    }
-    $url = get_local_social_course_url($courseid, $publicationid);
-    local_social_course_ajax_response(["url" => (string)$url]);
+  function local_social_course_upload_resource($courseid, $userid, $resource){
+    $resource = new local_social_course_resource();
+    $resource->name = $_FILES['resource']['name'];
+    $resource->path = $_FILES['resource']['tmp_name'];
+    $resource = local_social_course_file::store($resource, $courseid, $userid);
+    // local_social_course_ajax_response(["url" => (string)$url]);
+    dd($resource);
   }
