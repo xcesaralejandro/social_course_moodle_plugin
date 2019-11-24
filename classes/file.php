@@ -29,11 +29,10 @@ class local_social_course_file{
     $this->contextid = $context->id;
     $this->userid = $userid;
     $this->filename = $resource->name;
-    $this->filepath = $resource->path;
     $this->mimetype = $resource->type;
     $this->id = self::save_in_database($resource);
     if($this->id){
-      self::save_in_disk();
+      self::save_in_disk($resource);
     }else{
       return false;
     }
@@ -56,12 +55,11 @@ class local_social_course_file{
     return $id;
   }
 
-  public function save_in_disk(){
-    if(!self::file_exist($file)){
-      dd("file NOTTTT   exist");
-      $storage->create_file_from_pathname($file, $resource->path);
-    }else{
-      dd("file exist");
+  public function save_in_disk($resource){
+    if(!self::file_exist()){
+      $file = self::get();
+      $storage = get_file_storage();
+      $file = $storage->create_file_from_pathname($file, $resource->path);
     }
     $url = get_local_social_course_url($courseid, $publicationid);
   }
@@ -73,9 +71,9 @@ class local_social_course_file{
     return $exist;
   }
 
-  public function get_file(){
-    $file = [
-    ];
+  public function get(){
+    $file = ["contextid" => $this->contextid, "component" => $this->component, "filearea" => $this->filearea,
+             "itemid" => $this->id, "filepath" => $this->filepath, "filename" => $this->filename];
     return $file;
   }
 
