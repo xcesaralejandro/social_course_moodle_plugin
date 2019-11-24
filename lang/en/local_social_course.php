@@ -10,8 +10,8 @@
   $string['publication_create_error'] = 'La publicación no pudo ser creada';
 
   // ADMIN SETTINGS
-  $string['cfg_max_records_per_query_title'] = 'Obtener publicaciones';
-  $string['cfg_max_records_per_query_desc'] = 'Numero de publicaciones que visualizarán los usuarios';
+  $string['cfg_max_records_per_query_title'] = 'Obtener registros';
+  $string['cfg_max_records_per_query_desc'] = 'Numero de publicaciones y comentarios que se obtendrán al cargar "más"';
   $string['cfg_ajax_polling_seconds_title'] = 'Tiempo de actualización';
   $string['cfg_ajax_polling_seconds_desc'] = 'Tiempo de espera para consultar por nueva información al servidor. 
                                               (En segundos)';

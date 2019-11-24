@@ -17,11 +17,32 @@ class local_social_course_file{
     $this->filearea = "social_course_attachment";
     $this->filepath = "/";
     $this->timecreated = time();
-    // $this->classname = 'local_social_course_file';
-    // $this->fillable = ["id", "userid","publicationid","contextid","component","filearea","filepath","filename",
-    //                    "mimetype","timecreated","timedeleted"];
-    // $this->obtainable = ["publicationid","contextid","component","filearea","filepath","filename",
-    //                      "mimetype","timecreated","timedeleted"];
+  }
+  public function find ($id){
+    global $DB;
+    $sql = "select * from {sc_files} where id = ? and sc_timedeleted IS NULL";
+    $row = $DB->get_record_sql($sql, array($id));
+    if(!$row){
+      return false;
+    }
+    $file = self::fill_from($row);
+    return $file;
+  }
+
+  private function fill_from($row){
+    $this->id = $row->id;
+    $this->publicationid = $row->sc_publicationid;
+    $this->userid = $row->sc_userid;
+    $this->contextid = $row->sc_contextid;
+    $this->component = $row->sc_component;
+    $this->filearea = $row->sc_filearea;
+    $this->filepath = $row->sc_filepath;
+    $this->filename = $row->sc_filename;
+    $this->mimetype = $row->sc_mimetype;
+    $this->timecreated = $row->sc_timecreated;
+    $this->timedeleted = $row->sc_timedeleted;
+    $file = self::search_file();
+    return $file;
   }
 
   public function store($resource, $courseid, $userid){
@@ -38,7 +59,7 @@ class local_social_course_file{
     }
   }
 
-  public function save_in_database($resource){
+  private function save_in_database($resource){
     global $DB;
     $file = new stdClass();
     $file->sc_publicationid = $this->publicationid;
@@ -55,16 +76,17 @@ class local_social_course_file{
     return $id;
   }
 
-  public function save_in_disk($resource){
+  private function save_in_disk($resource){
     if(!self::file_exist()){
       $file = self::get();
       $storage = get_file_storage();
       $file = $storage->create_file_from_pathname($file, $resource->path);
     }
-    $url = get_local_social_course_url($courseid, $publicationid);
+    $url = self::get_url();
+    return $url;
   }
 
-  public function file_exist(){
+  private function file_exist(){
     $storage = get_file_storage();
     $exist = $storage->file_exists($this->contextid, $this->component, $this->filearea, $this->itemid, 
                                    $this->filepath, $this->filename); 
@@ -75,6 +97,27 @@ class local_social_course_file{
     $file = ["contextid" => $this->contextid, "component" => $this->component, "filearea" => $this->filearea,
              "itemid" => $this->id, "filepath" => $this->filepath, "filename" => $this->filename];
     return $file;
+  }
+
+  private function get_url($forcedownload = false) {
+    $file = self::search_file();
+    if (!$file){
+      return false;
+    }
+    $url = moodle_url::make_pluginfile_url($file->get_contextid(), $file->get_component(), $file->get_filearea(),
+                                           $file->get_itemid(), $file->get_filepath(), $file->get_filename(),
+                                           $forcedownload);
+    return $url;
+  }
+
+  private function search_file(){
+    $storage = get_file_storage();
+    $file = $storage->get_area_files($this->contextid, $this->component, $this->filearea,
+                                     $this->id, $sort = false, $includedirs = false);
+    if (empty($file)){
+      return false;
+    }
+    return array_shift($file);
   }
 
 }
