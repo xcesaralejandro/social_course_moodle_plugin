@@ -18,7 +18,20 @@ class local_social_course_file{
     $this->filepath = "/";
     $this->timecreated = time();
   }
-
+  
+  public static function associate($files, $publicationid, $userid){
+    if(empty($files)){
+      return true;
+    }
+    global $DB;
+    list($in, $in_values) = $DB->get_in_or_equal($files);
+    $sql = "update {sc_files} set sc_publicationid = ? WHERE id $in and sc_userid = ?";
+    $params = array($publicationid, $userid);
+    $params = array_merge($params, $in_values);
+    $updated = $DB->execute($sql, $params);
+    return $updated;
+  }
+  
   public function get_resource($id){
     $file = self::find($id);
     if(!$file){

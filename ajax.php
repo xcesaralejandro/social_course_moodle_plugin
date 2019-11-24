@@ -8,6 +8,7 @@
   $userid = optional_param('uid', false, PARAM_INT);
   $comment = optional_param('c', false, PARAM_RAW);
   $recipients = optional_param('r', array(), PARAM_INT);
+  $attachments = optional_param('at', array(), PARAM_RAW);
   $groupid_share = optional_param('gs', null, PARAM_RAW);
   $roleid_share = optional_param('rs', null, PARAM_RAW);
   $type_share = optional_param('ts', false, PARAM_RAW);
@@ -25,6 +26,7 @@
     array_push($params, $roleid_share);
     array_push($params, $type_share);
     array_push($params, $name_share);
+    array_push($params, $attachments);
     if($courseid && $userid && $comment && strlen($comment) > 0 && $type_share && $name_share){
       $func = "local_social_course_create_publication";
     }
@@ -47,7 +49,7 @@
 
   function local_social_course_create_publication($courseid, $userid, $comment, $destinataries,
                                                   $groupid_share, $roleid_share, $type_share,
-                                                  $name_share){
+                                                  $name_share, $attachments){
     $share = new local_social_course_share();
     $share->name = $name_share;
     $share->groupid = $groupid_share;
@@ -57,6 +59,7 @@
     $publication->fill(["courseid" => $courseid, "authorid" => $userid, "comment" => $comment,
                         "share" => $share]);
     if($publication->save()){
+      local_social_course_file::associate($attachments, $publication->getProperty("id") ,$userid);
       $recipients = array();
       foreach($destinataries as $recipientid){
         $recipient = new local_social_course_recipient();
