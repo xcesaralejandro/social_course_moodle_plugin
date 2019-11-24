@@ -34,7 +34,6 @@ class local_social_course_file{
     $resource->name = $this->filename;
     $resource->path = self::get_url();
     $resource->type = $this->mimetype;
-    dd($resource);
     return $resource;
   }
 

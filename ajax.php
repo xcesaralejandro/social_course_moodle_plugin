@@ -84,6 +84,5 @@
     $resource->type = $_FILES['resource']['type'];
     $file = new local_social_course_file();
     $resource = $file->store($resource, $courseid, $userid);
-    // local_social_course_ajax_response(["url" => (string)$url]);
-    dd($resource);
+    local_social_course_ajax_response(["resource" => $resource]);
   }
