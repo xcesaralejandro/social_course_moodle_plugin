@@ -52,13 +52,6 @@
     header('Content-type: application/json');
   }
 
-  function local_social_course_file_exist($file){
-    $file_storage = get_file_storage();
-    $exist = $file_storage->file_exists($file['contextid'], $file['component'], $file['filearea'],
-                                        $file['itemid'], $file['filepath'], $file['filename']); 
-    return $exist;
-  }
-
   function get_local_social_course_file($courseid, $publicationid) {
     $context = context_course::instance($courseid);
     $fs = get_file_storage();
