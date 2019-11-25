@@ -174,5 +174,18 @@
       return $valid;
     }
 
-    
+    public function add_recipients($recipients){
+      $created = array();
+      if(empty($recipients)){
+        return $created;
+      }
+      foreach($recipients as $recipientid){
+        $recipient = new local_social_course_recipient();
+        $recipient->fill(["recipientid" => $recipientid, "publicationid" => $this->id,"timecreated" => time()]);
+        $recipient = $recipient->save();
+        array_push($created, $recipient);
+      }
+      $this->recipients = array_merge($this->recipients, $created);
+      return $this->recipients;
+    }
   }

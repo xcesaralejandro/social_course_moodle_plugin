@@ -47,7 +47,7 @@
     local_social_course_ajax_response(array(), $message, false);
   }
 
-  function local_social_course_create_publication($courseid, $userid, $comment, $destinataries,
+  function local_social_course_create_publication($courseid, $userid, $comment, $recipients,
                                                   $groupid_share, $roleid_share, $type_share,
                                                   $name_share, $attachments){
     $share = new local_social_course_share();
@@ -59,16 +59,8 @@
     $publication->fill(["courseid" => $courseid, "authorid" => $userid, "comment" => $comment,
                         "share" => $share]);
     if($publication->save()){
-      local_social_course_file::associate($attachments, $publication->getProperty("id") ,$userid);
-      $recipients = array();
-      foreach($destinataries as $recipientid){
-        $recipient = new local_social_course_recipient();
-        $recipient->fill(["recipientid" => $recipientid, "publicationid" => $publication->getProperty("id"), 
-                          "timecreated" => time()]);
-        $recipient = $recipient->save();
-        array_push($recipients, $recipient);
-      }
-      $publication->fill(["recipients" => $recipients]);
+      local_social_course_file::associate($attachments, $publication->getProperty("id"), $userid);
+      $publication->add_recipients($recipients);
       $publication = $publication->get();
       $status = true;
       $message = null;
