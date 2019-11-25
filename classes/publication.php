@@ -17,30 +17,6 @@
       $this->recipients = array();     
       $this->comments = array();    
     }
-
-    public function get(){
-      $publication = new stdClass();
-      $publication->id = $this->id;
-      $publication->courseid = $this->courseid;
-      $publication->authorid = $this->authorid;
-      $publication->comment = $this->comment;
-      $publication->share = $this->share;
-      $publication->comments = $this->comments;
-      $publication->attachments = $this->attachments;
-      $publication->recipients = $this->recipients;
-      return $publication;
-    }
-
-    public function fill($params){
-      if(gettype($params) != 'array'){
-        print_error("params only can be array :) ");
-      }
-      foreach($params as $field => $value){
-        // if(isset($this->$field)){
-          $this->$field = $value;
-        // }
-      }
-    }
     
     public static function find($publicationid){
       global $DB;
@@ -146,7 +122,7 @@
     }
 
     public function save(){
-      if(!self::validate_properties()){
+      if(!self::valid_properties()){
         return null;
       }
       global $DB;
@@ -165,7 +141,7 @@
       return $publication;
     }
 
-    private function validate_properties(){
+    private function valid_properties(){
       $valid = false;
       if(!empty($this->courseid) && !empty($this->authorid) && !empty($this->comment) && 
           !empty($this->share) && gettype($this->recipients) == "array"){
