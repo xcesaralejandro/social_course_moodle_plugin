@@ -22,6 +22,68 @@
                   </v-layout>
               </v-flex>
 
+
+
+
+
+
+
+
+
+
+              <template>
+  <v-card>
+    <v-tabs vertical>
+      <v-tab>
+        <v-icon left>add_a_photo</v-icon>
+      </v-tab>
+      <v-tab>
+        <v-icon left>mic</v-icon>
+      </v-tab>
+      <v-tab>
+        <v-icon left>attach_file</v-icon>
+      </v-tab>
+
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+           ADD PHOTO JEJE
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+           ADD A AUDIO
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item>
+        <v-card flat>
+          <v-card-text>
+           ADD FILESSSSS
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+    </v-tabs>
+  </v-card>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               <v-flex d-flex justify-end class="action-separator">
                 <v-flex id="image-input">
                   <v-file-input class="pa-0 ma-0" @change="addImage" :accept="mime_types(false)" :multiple="true"
