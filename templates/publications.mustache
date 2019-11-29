@@ -11,27 +11,11 @@
               <v-flex>
               <textarea id="comment-publication" class="emoji-picker" outlined></textarea>
               </v-flex>
-              <v-flex v-if="publication.new.images.length > 0" id="preview-image-container" 
-                      class="mb-4 d-flex pa-2" >
-                  <v-layout v-for="(image, index, key) in publication.new.images" class="ma-1 image-container" 
-                            :key="key">
-                      <v-flex class="delete-image" @click="remove_image(index)">
-                        <v-icon>close</v-icon>
-                      </v-flex>
-                      <img :src="image" width="150" heigth="150"/>
-                  </v-layout>
-              </v-flex>
+              
 
 
 
-
-
-
-
-
-
-
-              <template>
+  <template>
   <v-card>
     <v-tabs vertical>
       <v-tab>
@@ -45,9 +29,23 @@
       </v-tab>
 
       <v-tab-item>
-        <v-card flat>
+        <v-card flat id="photos-container">
           <v-card-text>
-           ADD PHOTO JEJE
+            <v-flex>
+              <label for="upload-photo" class="label-input-image">Subir una imagen</label>
+              <v-file-input multiple id="upload-photo"></v-file-input>
+              {{! <input type="file" name="photo" id="upload-photo" /> }}
+            </v-flex>
+           <v-flex v-if="publication.new.images.length > 0" id="preview-image-container" 
+                   class="mb-4 d-flex pa-2" >
+              <v-layout v-for="(image, index, key) in publication.new.images" class="ma-1 image-container" 
+                        :key="key">
+                  <v-flex class="delete-image" @click="remove_image(index)">
+                    <v-icon>close</v-icon>
+                  </v-flex>
+                <img :src="image" width="150" heigth="150"/>
+              </v-layout>
+            </v-flex>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -85,10 +83,6 @@
 
 
               <v-flex d-flex justify-end class="action-separator">
-                <v-flex id="image-input">
-                  <v-file-input class="pa-0 ma-0" @change="addImage" :accept="mime_types(false)" :multiple="true"
-                                prepend-icon="camera_alt"></v-file-input>
-                </v-flex>
                 <v-btn small outlined class="ml-2 btn-share-with" @click="recipient.selecting = true">
                   <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon> 
                   <v-icon v-if="selecting_group()" class="mr-1">people</v-icon>

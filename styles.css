@@ -48,36 +48,6 @@
     border-radius: 4px;
 }
 
-#publications #image-input .v-input__control{
-    display: none !important;
-}
-
-#publications #image-input .v-input__prepend-outer{
-    margin: 0 !important;
-}
-
-#publications #image-input{
-    flex: 0 0 0 !important;
-    border: 1px dashed #99a1a9;
-    transition: all .3s ease;
-}
-#publications #image-input:hover{
-    background: #f9f9fa;
-}
-
-#publications #image-input .v-input__icon.v-input__icon--prepend{
-    width: 44px !important;
-    height: 24px !important;
-}
-
-#publications #image-input .v-input__prepend-outer i{
-    font-size: 1.4rem;
-    width: 100% !important;
-    height: 100% !important;
-    padding-top: 3px;
-    color: #99a1a9 !important;
-}
-
 #publications #preview-image-container{
     max-height: 250px;
     overflow-y: scroll;
@@ -133,3 +103,13 @@
     border: 1px solid #6a7177 !important;
     border-radius: 50% !important;
 }
+#publications .label-input-image {
+    cursor: pointer;
+ }
+ 
+ #photos-container input{
+    display: none;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+ }
