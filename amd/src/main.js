@@ -221,11 +221,9 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
           this.group.all.unshift(group)
         },
 
-        mime_types(joined){
+        accepted_mime_types(){
           var mime_types = ["image/png", "image/jpeg"]
-          if(joined){
-            mime_types = mime_types.join(", ")
-          }
+          mime_types = mime_types.join(", ")
           return mime_types
         },
 
