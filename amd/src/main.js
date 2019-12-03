@@ -26,6 +26,9 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
       el: "#publications",
       vuetify: new Vuetify(),
       data: {
+        upload : {
+
+        },
         course : data.course,
         user : data.user,
         selection : {
@@ -228,7 +231,27 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
         },
 
         addImage(files){
+          console.log("filesfilesfiles", files)  
+          var route = 'http://cvirtual.cl/local/social_course/ajax.php'
           files.forEach((file) => {
+
+            let config = {
+              onUploadProgress: progressEvent => {
+                let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+                console.log("percentCompleted", percentCompleted)
+              }
+            }
+
+            var formData = new FormData();
+            formData.append('resource', file, file.filename);
+            formData.append('a', 'uploadresource');
+            formData.append('uid', 2);
+            formData.append('cid', 2);
+
+            Axios.post(route, formData, config)
+            .then(response => console.log('response',response))
+
+
             this.publication.new.images.unshift(URL.createObjectURL(file))
           })
         },
