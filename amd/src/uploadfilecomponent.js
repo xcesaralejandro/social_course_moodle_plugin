@@ -5,18 +5,17 @@ define(['local_social_course/axios'], function(Axios) {
       <v-layout column>
         <v-flex class="upload-file-header pa-1 d-flex justify-space-around">
           <span v-text="get_title()" v-if="!status.success"></span>
-          <span v-text="label.delete" @click="remove()" class="remove-file"></span>
+          <span v-if="status.success" v-text="label.delete" @click="remove()" class="remove-file"></span>
         </v-flex>
-        <v-flex v-if="uploading()" class="upload-file-content pa-6 text-center">
+        <v-flex v-if="uploading()" class="upload-file-content pa-2 d-flex justify-center align-center">
           <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" :color="progress_color()">
             {{ upload.percentage }}
           </v-progress-circular>
         </v-flex>
-        <v-flex v-if="is_image() && !uploading()">
-          imagen acá wee
-        </v-flex>
-        <v-flex v-else>
-          <span>Error</span>
+        <v-flex v-if="is_image() && !uploading()" class="upload-file-content pa-2 d-flex justify-center align-center">
+            <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" :color="progress_color()">
+            {{ upload.percentage }}
+          </v-progress-circular>
         </v-flex>
         <v-flex class="upload-file-footer pa-1 text-center">
           <v-layout column>
