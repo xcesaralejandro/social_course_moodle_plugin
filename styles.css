@@ -149,3 +149,7 @@
 .upload-file-content{
   min-height: 150px !important;
 }
+
+.fit-image-to-parent{
+  max-height: 180px !important;
+}

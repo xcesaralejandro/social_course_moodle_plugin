@@ -13,7 +13,7 @@ define(['local_social_course/axios'], function(Axios) {
           </v-progress-circular>
         </v-flex>
         <v-flex v-if="status.is_success && is_image()" class="upload-file-content d-flex justify-center align-center">
-          <v-img :src="local_url()" aspect-ratio="1"></v-img>    
+          <img :src="local_url()" width="1920" class="fit-image-to-parent" />
         </v-flex>
         <v-flex class="upload-file-footer pa-1 text-center">
           <v-layout column class="caption">
