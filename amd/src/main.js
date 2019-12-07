@@ -4,8 +4,9 @@ define(["jquery",
         "local_social_course/axios",
         "local_social_course/moment",
         "local_social_course/emojionearea",
+        "local_social_course/uploadfilecomponent",
       ], 
-function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
+function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
   "use strict";
   const ALL = -1
   const WITHOUT = 0
@@ -20,71 +21,77 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
   function init(data) {
     data = add_initial_properties(data)
     Vue.use(Vuetify)
+    Vue.component('upload-file',Uploadfile)
     Vue.config.productionTip = false;
     new Vue({
       delimiters: ["[[", "]]"],
       el: "#publications",
       vuetify: new Vuetify(),
-      data: {
-        upload : {
+      data(){  
+        return {
+          upload : {
 
-        },
-        course : data.course,
-        user : data.user,
-        selection : {
-          is_custom : false,
-          type : "all",
-          group_id : ALL,
-          role_id : ALL
-        },
-        recipient : {
-          selecting : false,
-          enrolled : data.enrolled,
-          table : {
-            headers : [
-              {
-                text: '',
-                align: 'left',
-                sortable: false,
-                value: 'picture',
+          },
+          course : data.course,
+          user : data.user,
+          selection : {
+            is_custom : false,
+            type : "all",
+            group_id : ALL,
+            role_id : ALL
+          },
+          recipient : {
+            selecting : false,
+            enrolled : data.enrolled,
+            table : {
+              headers : [
+                {
+                  text: '',
+                  align: 'left',
+                  sortable: false,
+                  value: 'picture',
+                },
+                {
+                  text: 'Nombres',
+                  align: 'left',
+                  sortable: true,
+                  value: 'firstname',
+                },
+                {
+                  text: 'Apellidos',
+                  align: 'left',
+                  sortable: true,
+                  value: 'lastname',
+                },
+                {
+                  text: 'Selección',
+                  align: 'center',
+                  sortable: true,
+                  value: 'is_recipient',
+                }
+              ]
+            }
+          },
+          group : {
+            all : data.groups,
+            selected : ALL
+          },
+          role : {
+            availables : data.available_roles,
+            selected : ALL
+          },
+          publication : {
+            new : {
+              images : {
+                uploaded : [],
+                pending : []
               },
-              {
-                text: 'Nombres',
-                align: 'left',
-                sortable: true,
-                value: 'firstname',
-              },
-              {
-                text: 'Apellidos',
-                align: 'left',
-                sortable: true,
-                value: 'lastname',
-              },
-              {
-                text: 'Selección',
-                align: 'center',
-                sortable: true,
-                value: 'is_recipient',
-              }
-            ]
-          }
-        },
-        group : {
-          all : data.groups,
-          selected : ALL
-        },
-        role : {
-          availables : data.available_roles,
-          selected : ALL
-        },
-        publication : {
-          new : {
-            images : [],
-            resources : [],
-            errors : []
-          }
-        },
-        search : null,
+              resources : [],
+              errors : []
+            }
+          },
+          search : null,
+        }
       },
       mounted() {
         $(".emoji-picker").emojioneArea({
@@ -96,6 +103,11 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
         this.add_default_group()
       },
       computed : {
+        exist_attachments(){
+          let exist = this.publication.new.images.pending.length > 0 || 
+                      this.publication.new.images.uploaded.length > 0
+          return exist
+        },
         selection_name(){
           var name = "all"
           if(this.selecting_all()){
@@ -127,7 +139,6 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
           }
           return users
         }
-
       },
       methods : {
         selecting_all(){
@@ -231,33 +242,38 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea) {
         },
 
         addImage(files){
-          console.log("filesfilesfiles", files)  
-          var route = 'http://cvirtual.cl/local/social_course/ajax.php'
+          // console.log("filesfilesfiles", files)  
+          // var route = 'http://cvirtual.cl/local/social_course/ajax.php'
           files.forEach((file) => {
+            var image = new Object
+            image.raw = file
+            image.uploaded = false
+            image.url = new Object
+            image.url.local = URL.createObjectURL(file)
+            image.url.server = null
+            // console.log("FILEFILEFILE", file)
+            // let config = {
+            //   onUploadProgress: progressEvent => {
+            //     let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+            //     console.log("percentCompleted", percentCompleted)
+            //   }
+            // }
 
-            let config = {
-              onUploadProgress: progressEvent => {
-                let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-                console.log("percentCompleted", percentCompleted)
-              }
-            }
+            // var formData = new FormData();
+            // formData.append('resource', file, file.filename);
+            // formData.append('a', 'uploadresource');
+            // formData.append('uid', 2);
+            // formData.append('cid', 2);
 
-            var formData = new FormData();
-            formData.append('resource', file, file.filename);
-            formData.append('a', 'uploadresource');
-            formData.append('uid', 2);
-            formData.append('cid', 2);
+            // Axios.post(route, formData, config)
+            // .then(response => console.log('response',response))
 
-            Axios.post(route, formData, config)
-            .then(response => console.log('response',response))
-
-
-            this.publication.new.images.unshift(URL.createObjectURL(file))
+            this.publication.new.images.pending.unshift(image)
           })
         },
 
         remove_image(index){
-          this.publication.new.images.splice(index, 1)
+          this.publication.new.images.uploaded.splice(index, 1)
         },
         
         update_recipient(person){

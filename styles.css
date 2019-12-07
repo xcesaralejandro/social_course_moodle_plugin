@@ -126,3 +126,22 @@
   border-color: #cccccc !important;
   font-size: 1rem !important;
 }
+
+.upload-file-container{
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 180px !important;
+  width: 180px !important;
+  max-width: 180px !important;
+}
+
+.upload-file-container .upload-file-header,
+.upload-file-container .upload-file-footer{
+  background: #efefef;
+}
+
+#attachments-container{
+  overflow-x: scroll !important;
+  border: 1px solid #f1f1f1;
+}
