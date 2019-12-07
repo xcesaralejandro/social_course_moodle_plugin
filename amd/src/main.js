@@ -247,6 +247,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           files.forEach((file) => {
             var image = new Object
             image.raw = file
+            image.id = null
             image.uploaded = false
             image.url = new Object
             image.url.local = URL.createObjectURL(file)
@@ -268,7 +269,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             // Axios.post(route, formData, config)
             // .then(response => console.log('response',response))
 
-            this.publication.new.images.pending.unshift(image)
+            this.publication.new.images.pending.push(image)
           })
         },
 

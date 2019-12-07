@@ -4,18 +4,17 @@ define(['local_social_course/axios'], function(Axios) {
     <v-container class="upload-file-container pa-0">
       <v-layout column>
         <v-flex class="upload-file-header pa-1 d-flex justify-space-around">
-          <span v-text="get_title()" v-if="!status.success"></span>
-          <span v-if="status.success" v-text="label.delete" @click="remove()" class="remove-file"></span>
+          <span v-text="get_title()" v-if="!status.is_success"></span>
+          <span v-if="status.is_success" v-text="label.delete" @click="remove()" class="remove-file"></span>
         </v-flex>
         <v-flex v-if="uploading()" class="upload-file-content pa-2 d-flex justify-center align-center">
           <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" :color="progress_color()">
             {{ upload.percentage }}
           </v-progress-circular>
         </v-flex>
-        <v-flex v-if="is_image() && !uploading()" class="upload-file-content pa-2 d-flex justify-center align-center">
-            <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" :color="progress_color()">
-            {{ upload.percentage }}
-          </v-progress-circular>
+        <v-flex v-if="status.is_success && is_image()" class="upload-file-content d-flex justify-center align-center">
+        <v-img :src="resource.path" aspect-ratio="1"></v-img>    
+        
         </v-flex>
         <v-flex class="upload-file-footer pa-1 text-center">
           <v-layout column>
@@ -31,6 +30,12 @@ define(['local_social_course/axios'], function(Axios) {
     },
     data(){
       return{
+        resource : {
+          id : null,
+          name : null,
+          path : null,
+          type : null
+        },
         api : {
           route : `${M.cfg.wwwroot}/local/social_course/ajax.php`,
           action : 'uploadresource'
@@ -52,9 +57,9 @@ define(['local_social_course/axios'], function(Axios) {
       },
       status(){
         let status = new Object
-        status.error = this.upload.status == 'error' 
-        status.success = this.upload.status == 'success'
-        status.inprogress = this.upload.status == 'inprogress'
+        status.is_error = this.upload.status == 'error' 
+        status.is_success = this.upload.status == 'success'
+        status.is_inprogress = this.upload.status == 'inprogress'
         return status 
       }
     },
@@ -73,8 +78,13 @@ define(['local_social_course/axios'], function(Axios) {
         Axios.post(this.api.route, params, config)
         .then( response => {
           if(response.status == 200 && response.data.valid){
-            // console.log('Axios response', response)
+            console.log(response.data)
+            this.resource.id = response.data.data.resource.id
+            this.resource.name = response.data.data.resource.name
+            this.resource.path = response.data.data.resource.path
+            this.resource.type = response.data.data.resource.type
             this.upload.status = 'success'
+            // console.log("this.resource",this.resource)
           }else{
             this.upload.status = 'error'
           }
@@ -132,10 +142,10 @@ define(['local_social_course/axios'], function(Axios) {
         let gray = '#607d8b'
         let green = '#8bc34a'
         var color = red
-        if(this.status.inprogress){
+        if(this.status.is_inprogress){
           color = gray 
         }
-        if(this.status.success){
+        if(this.status.is_success){
           color = green 
         }
         return color
