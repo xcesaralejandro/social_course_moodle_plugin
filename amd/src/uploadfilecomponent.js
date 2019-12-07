@@ -13,12 +13,11 @@ define(['local_social_course/axios'], function(Axios) {
           </v-progress-circular>
         </v-flex>
         <v-flex v-if="status.is_success && is_image()" class="upload-file-content d-flex justify-center align-center">
-        <v-img :src="resource.path" aspect-ratio="1"></v-img>    
-        
+          <v-img :src="local_url()" aspect-ratio="1"></v-img>    
         </v-flex>
         <v-flex class="upload-file-footer pa-1 text-center">
-          <v-layout column>
-          <span v-text="get_size()" class="caption"></span>
+          <v-layout column class="caption">
+          <span v-text="get_size()"></span>
           <span v-text="file_name"></span>
           </v-layout>
         </v-flex>
@@ -27,6 +26,7 @@ define(['local_social_course/axios'], function(Axios) {
     `,
     mounted(){
       this.push()
+      console.log("file", this.file)
     },
     data(){
       return{
@@ -95,6 +95,10 @@ define(['local_social_course/axios'], function(Axios) {
         .finally(()=> {
           // console.log("ALL END :V")
         })
+      },
+      local_url(){
+        let url = URL.createObjectURL(this.file)
+        return url
       },
       uploading(){
         let uploading = this.upload.status == 'inprogress'
