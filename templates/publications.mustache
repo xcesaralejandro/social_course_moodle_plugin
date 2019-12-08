@@ -34,7 +34,7 @@
               <v-flex v-if="exist_attachments">
                 <v-divider></v-divider>
                 <v-layout id="attachments-container" nowrap class="mt-2">
-                  <template v-for="(image, index, key) in publication.new.images.pending">
+                  <template v-for="(image, index, key) in publication.new.images">
                     <upload-file :file="image.raw" :position="index" :courseid="course.id" class="ma-2"
                                  :label="upload_file_labels" :authorid="user.id" :key="key" 
                                  @loaded="update_load_status" @delete="remove_image"></upload-file>

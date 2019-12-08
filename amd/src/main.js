@@ -82,10 +82,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           },
           publication : {
             new : {
-              images : {
-                uploaded : [],
-                pending : []
-              },
+              images : [],
               resources : [],
               errors : []
             }
@@ -104,8 +101,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
       },
       computed : {
         exist_attachments(){
-          let exist = this.publication.new.images.pending.length > 0 || 
-                      this.publication.new.images.uploaded.length > 0
+          let exist = this.publication.new.images.length > 0
           return exist
         },
         selection_name(){
@@ -250,19 +246,27 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             var image = new Object
             image.raw = file
             image.id = null
-            image.uploaded = false
             image.url = new Object
             image.url.local = URL.createObjectURL(file)
             image.url.server = null
-            this.publication.new.images.pending.push(image)
+            this.publication.new.images.push(image)
           })
         },
+        
         update_load_status(notice){
-          console.log("subida exitosa de", notice)
+          if(this.image_exist(notice.position)){
+            let position = notice.position
+            let record = notice.resource
+            this.publication.new.images[position].id = record.id
+            this.publication.new.images[position].url.server = record.path
+          }
+        },
+        image_exist(position){
+          let exist = typeof(this.publication.new.images[position]) != 'undefined'
+          return exist
         },
         remove_image(notice){
           console.log("eliminando", notice)
-          // this.publication.new.images.uploaded.splice(index, 1)
         },
         
         update_recipient(person){
