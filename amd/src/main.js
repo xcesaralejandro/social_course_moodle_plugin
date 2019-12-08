@@ -29,9 +29,6 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
       vuetify: new Vuetify(),
       data(){  
         return {
-          upload : {
-
-          },
           course : data.course,
           user : data.user,
           selection : {
@@ -249,7 +246,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             image.url = new Object
             image.url.local = URL.createObjectURL(file)
             image.url.server = null
-            this.publication.new.images.push(image)
+            this.publication.new.images.unshift(image)
           })
         },
         
@@ -261,14 +258,19 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             this.publication.new.images[position].url.server = record.path
           }
         },
+
+        remove_image(notice){
+          if(this.image_exist(notice.position)){
+            let position = notice.position
+            this.publication.new.images.splice(position, 1)
+          }
+        },
+        
         image_exist(position){
           let exist = typeof(this.publication.new.images[position]) != 'undefined'
           return exist
         },
-        remove_image(notice){
-          console.log("eliminando", notice)
-        },
-        
+
         update_recipient(person){
           this.set_custom_preselection()
           if(typeof(person.is_recipient) == "undefined"){
@@ -369,12 +371,10 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           return content 
         },
 
-        clear_publication(){
-          $('#comment-publication').val("")
-          $('.emojionearea-editor').html("")
-        },
-
         publishing(){
+          if(!this.uploads_finished()){
+            this.errors.push("Aún no se han subido todos los ficheros al servidor, espera a que este proceso finalice.")
+          }
           let route = `${M.cfg.wwwroot}/local/social_course/ajax.php`
           let params = {
             a : "createpublication",
@@ -398,8 +398,38 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           })
           .finally(() => {
           });  
-        }
+        },
 
+        clear_publication(){
+          $('#comment-publication').val("")
+          $('.emojionearea-editor').html("")
+          this.publication.new.images = []
+          this.publication.new.resources = []
+        },
+        
+        uploads_finished(){
+          let finished = true
+          if(!this.upload_images_finished() || !this.upload_resources_finished()){
+            finished = false
+          }
+          return finished
+        },
+
+        upload_images_finished(){
+          var finished = true
+          var publication = this.publication.new
+          publication.images.forEach(image => {
+            if(!image.id){
+              finished = false
+              return
+            }
+          })
+          return finished
+        },
+
+        upload_resources_finished(){
+          return true
+        },
       }
     });
   }

@@ -5,7 +5,7 @@ define(['local_social_course/axios'], function(Axios) {
       <v-layout column>
         <v-flex class="upload-file-header pa-1 d-flex justify-space-around caption">
           <span v-text="get_title()" v-if="!status.is_success"></span>
-          <span v-if="status.is_success" v-text="label.delete" @click="remove()" class="remove-file"></span>
+          <span v-if="status.is_success" v-text=" position + ' - ' +  label.delete" @click="remove()" class="remove-file"></span>
         </v-flex>
         <v-flex v-if="uploading()" class="upload-file-content pa-2 d-flex justify-center align-center">
           <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" 
@@ -48,6 +48,12 @@ define(['local_social_course/axios'], function(Axios) {
       }
     },
     props : ['file','position', 'courseid', 'authorid', 'label'],
+    watch : {
+      position(oldVal, newVal){
+        console.log("change old", oldVal)
+        console.log("change new", newVal)
+      }
+    },
     computed : {
       file_name(){
         let name = this.file.name
