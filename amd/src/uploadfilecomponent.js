@@ -1,18 +1,20 @@
 define(['local_social_course/axios'], function(Axios) {
   const uploadfile = {
     template : `
-    <v-container class="upload-file-container pa-0 gray-scale unselectable">
+    <v-container class="upload-file-container pa-0 unselectable">
       <v-layout column>
         <v-flex class="upload-file-header pa-1 d-flex justify-space-around caption">
           <span v-text="get_title()" v-if="!status.is_success"></span>
           <span v-if="status.is_success" v-text="label.delete" @click="remove()" class="remove-file"></span>
         </v-flex>
         <v-flex v-if="uploading()" class="upload-file-content pa-2 d-flex justify-center align-center">
-          <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" :color="progress_color()">
+          <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" 
+                               :color="progress_color()">
             {{ upload.percentage }}
           </v-progress-circular>
         </v-flex>
-        <v-flex v-if="status.is_success && is_image()" class="upload-file-content d-flex justify-center align-center">
+        <v-flex v-if="status.is_success && is_image()" class="upload-file-content d-flex justify-center 
+                align-center">
           <img :src="local_url()" width="1920" class="fit-image-to-parent" />
         </v-flex>
         <v-flex class="upload-file-footer pa-1 text-center">
@@ -26,7 +28,6 @@ define(['local_social_course/axios'], function(Axios) {
     `,
     mounted(){
       this.push()
-      console.log("file", this.file)
     },
     data(){
       return{
@@ -78,13 +79,12 @@ define(['local_social_course/axios'], function(Axios) {
         Axios.post(this.api.route, params, config)
         .then( response => {
           if(response.status == 200 && response.data.valid){
-            console.log(response.data)
             this.resource.id = response.data.data.resource.id
             this.resource.name = response.data.data.resource.name
             this.resource.path = response.data.data.resource.path
             this.resource.type = response.data.data.resource.type
             this.upload.status = 'success'
-            // console.log("this.resource",this.resource)
+            this.notify_load_complete()
           }else{
             this.upload.status = 'error'
           }
@@ -131,9 +131,20 @@ define(['local_social_course/axios'], function(Axios) {
         size = `(${size.toFixed(1)} ${unit})`
         return size
       },
-      notify(){
-        this.$emit('file.uploaded', 'subidito papetoooo')
+      notify_load_complete(){
+        let notice = new Object
+        notice.resource = this.resource 
+        notice.position = this.position 
+        this.$emit('loaded', notice)
       },
+      
+      notify_delete(){
+        let notice = new Object
+        notice.resource = this.resource 
+        notice.position = this.position 
+        this.$emit('delete', notice)
+      },
+
       is_image(){
         let is_image = this.file_type() == 'image'
         return is_image
@@ -155,7 +166,7 @@ define(['local_social_course/axios'], function(Axios) {
         return color
       },
       remove(){
-
+        this.notify_delete()
       }
 
     }

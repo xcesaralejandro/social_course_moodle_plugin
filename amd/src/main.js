@@ -138,7 +138,12 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             users = this.filter_users_by_search(users)
           }
           return users
-        }
+        },
+        upload_file_labels(){
+          let labels = {status : {inprogress : 'Subiendo...', success : 'Almacenado', error : 'Error'}, 
+                       delete : 'eliminar'}
+          return labels
+        },
       },
       methods : {
         selecting_all(){
@@ -202,7 +207,6 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
 
         filter_users_by_search(users){
           var sentence = this.search.toLowerCase()
-          console.log(users)
           users = users.filter(user => {
             return user.firstname.toLowerCase().includes(sentence) || user.lastname.toLowerCase().includes(sentence)
           })
@@ -242,8 +246,6 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
         },
 
         addImage(files){
-          // console.log("filesfilesfiles", files)  
-          // var route = 'http://cvirtual.cl/local/social_course/ajax.php'
           files.forEach((file) => {
             var image = new Object
             image.raw = file
@@ -252,29 +254,15 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             image.url = new Object
             image.url.local = URL.createObjectURL(file)
             image.url.server = null
-            // console.log("FILEFILEFILE", file)
-            // let config = {
-            //   onUploadProgress: progressEvent => {
-            //     let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
-            //     console.log("percentCompleted", percentCompleted)
-            //   }
-            // }
-
-            // var formData = new FormData();
-            // formData.append('resource', file, file.filename);
-            // formData.append('a', 'uploadresource');
-            // formData.append('uid', 2);
-            // formData.append('cid', 2);
-
-            // Axios.post(route, formData, config)
-            // .then(response => console.log('response',response))
-
             this.publication.new.images.pending.push(image)
           })
         },
-
-        remove_image(index){
-          this.publication.new.images.uploaded.splice(index, 1)
+        update_load_status(notice){
+          console.log("subida exitosa de", notice)
+        },
+        remove_image(notice){
+          console.log("eliminando", notice)
+          // this.publication.new.images.uploaded.splice(index, 1)
         },
         
         update_recipient(person){

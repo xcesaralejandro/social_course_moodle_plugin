@@ -29,16 +29,6 @@
                 <v-layout>
                   adjuntar archivo 
                 </v-layout>
-                  {{! <v-flex v-if="publication.new.images.length > 0" id="preview-image-container" 
-                          class="mb-4 d-flex pa-2" >
-                      <v-layout v-for="(image, index, key) in publication.new.images" class="ma-1 image-container" 
-                                :key="key">
-                          <v-flex class="delete-image" @click="remove_image(index)">
-                            <v-icon>close</v-icon>
-                          </v-flex>
-                        <img :src="image" width="150" heigth="150"/>
-                      </v-layout>
-                    </v-flex> }}
 
               </v-flex>
               <v-flex v-if="exist_attachments">
@@ -46,8 +36,8 @@
                 <v-layout id="attachments-container" nowrap class="mt-2">
                   <template v-for="(image, index, key) in publication.new.images.pending">
                     <upload-file :file="image.raw" :position="index" :courseid="course.id" class="ma-2"
-                                 :label="{status : {inprogress : 'Subiendo...', success : 'Almacenado', error : 'Error'}, delete : 'eliminar'}" 
-                                 :authorid="user.id" :key="key" @file.uploaded=""></upload-file>
+                                 :label="upload_file_labels" :authorid="user.id" :key="key" 
+                                 @loaded="update_load_status" @delete="remove_image"></upload-file>
                   </template>
                 </v-layout>
               </v-flex>
