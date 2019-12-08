@@ -1,9 +1,9 @@
 define(['local_social_course/axios'], function(Axios) {
   const uploadfile = {
     template : `
-    <v-container class="upload-file-container pa-0">
+    <v-container class="upload-file-container pa-0 gray-scale unselectable">
       <v-layout column>
-        <v-flex class="upload-file-header pa-1 d-flex justify-space-around">
+        <v-flex class="upload-file-header pa-1 d-flex justify-space-around caption">
           <span v-text="get_title()" v-if="!status.is_success"></span>
           <span v-if="status.is_success" v-text="label.delete" @click="remove()" class="remove-file"></span>
         </v-flex>

@@ -139,6 +139,7 @@
 .upload-file-container .upload-file-header,
 .upload-file-container .upload-file-footer{
   background: #efefef;
+  text-transform: uppercase;
 }
 
 #attachments-container{
@@ -151,5 +152,27 @@
 }
 
 .fit-image-to-parent{
+  min-height: 180px !important;
   max-height: 180px !important;
+}
+
+.gray-scale{
+  filter: grayscale(1);
+  transition: all .4s ease;
+}
+
+.gray-scale:hover{
+  filter: grayscale(0);
+}
+
+.unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.remove-file{
+  cursor: pointer;
 }
