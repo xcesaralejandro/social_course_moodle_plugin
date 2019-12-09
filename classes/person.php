@@ -5,6 +5,6 @@ class local_social_course_person{
   public $firstname;
   public $lastname;
   public $email;
-  public $lastaccess;
-  public $lastaction;
+  // public $lastaccess;
+  // public $lastaction;
 }

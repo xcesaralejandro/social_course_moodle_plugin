@@ -1,5 +1,6 @@
 <?php 
   class local_social_course_core{
+    const  USER_FIELDS = ["id", "username", "firstname", "lastname", "email"];
 
     protected function get_course_from_id($courseid, $strictness = MUST_EXIST){
       global $DB;
@@ -13,9 +14,9 @@
       return $user;
     }
 
-    protected function user_fields($prefix = null, $renameid = null){
+    protected function gettable_user_fields($prefix = null, $renameid = null){
       $query = "";
-      $fields = ["id", "username", "firstname", "lastname", "email", "lastaccess"];
+      $fields = self::USER_FIELDS;
       $last = count($fields) - 1;
       foreach($fields as $iteration => $field){
         if($iteration == 0 && $renameid){
@@ -28,6 +29,34 @@
         }
       }
       return $query;
+    }
+
+    protected function clean_user_properties($user){
+      $cleaned = new stdClass();
+      if(gettype($user) != 'object'){
+        print_error("clean_user_properties only accept a user object, not " . gettype($user));
+      }
+      foreach(self::USER_FIELDS as $property){
+        $cleaned->$property = isset($user->$property) ? $user->$property : null;
+      }
+      return $cleaned;
+    }
+
+    protected function clean_users_properties($users){
+      if(gettype($users) != 'array'){
+        print_error("clean_users_properties only accept a array, not " . gettype($users));
+      }
+      $cleaned = array();
+      foreach($users as $user){
+        $user = self::clean_user_properties($user);
+        array_push($cleaned, $user);
+      }
+      return $cleaned;
+    }
+
+    protected function picture_profile_url($userid){
+      $url = new moodle_url("/user/pix.php/$userid/f1.jpg");
+      return $url->out(false);
     }
 
     // const  USER_FIELDS = "u.id, u.username, u.firstname, u.lastname, u.email, u.lastaccess";
