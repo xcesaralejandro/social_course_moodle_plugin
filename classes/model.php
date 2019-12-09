@@ -1,5 +1,5 @@
 <?php 
-class local_social_course_model{
+class local_social_course_model extends local_social_course_core{
   protected $classname;
   protected $fillable;
   protected $obtainable;
