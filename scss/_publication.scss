@@ -117,7 +117,8 @@
     overflow-y: scroll;
   }
 
+  [role="listitem"]:not(:first-child),
   .v-card__actions{
-    border-top: 1px solid $border-light-color;
+    border-top: 1px solid $border-light-color !important;
   }
 }

@@ -196,8 +196,9 @@
   max-height: 250px;
   overflow-y: scroll;
 }
+#publications [role=listitem]:not(:first-child),
 #publications .v-card__actions {
-  border-top: 1px solid #e3e3e3;
+  border-top: 1px solid #e3e3e3 !important;
 }
 
 /*# sourceMappingURL=styles.css.map */
