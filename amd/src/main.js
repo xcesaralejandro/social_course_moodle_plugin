@@ -30,6 +30,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
       vuetify: new Vuetify(),
       data(){
         return {
+          config : data.config,
           course : data.course,
           user : data.user,
           selection : {
@@ -139,6 +140,10 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
                        delete : 'eliminar'}
           return labels
         },
+        current_attachment_photos(){
+          let count = this.publication.new.images.length
+          return count
+        }
       },
       methods : {
         selecting_all(){
@@ -432,6 +437,25 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
         upload_resources_finished(){
           return true
         },
+
+        render_image_attachments(){
+          let can = this.config.max_attachment_photo > 0
+          return can
+        },
+
+        photo_attachments_exceed_limit(){
+          let current = this.publication.new.images.length
+          let exceed = current > this.config.max_attachment_photo
+          console.log(exceed);
+          return exceed
+        },
+        attachment_photos_legend(){
+          let legend = ""
+          if(this.photo_attachments_exceed_limit()){
+            legend = `Limite de fotos adjuntas superado.`
+          }
+          return legend
+        }
       }
     });
   }

@@ -12,7 +12,7 @@
                 <textarea id="comment-publication" class="emoji-picker" outlined></textarea>
               </v-flex>
               <v-flex id="attachments" d-flex justify-center align-center>
-                <v-layout id="photos-container">
+                <v-layout id="photos-container" v-if="render_image_attachments()">
                   <label for="upload-photo" class="ma-0">
                     <v-flex class="label-input-image sc-btn-gray pr-4 pl-4 pt-1 pb-1 d-flex">
                       <span class="mr-2 d-flex align-center">Adjuntar imagen</span>
@@ -29,6 +29,12 @@
 
               <v-flex v-if="exist_attachments">
                 <v-divider></v-divider>
+                <v-layout justify-end align-center>
+                  <span v-text="attachment_photos_legend()" class="red-text mr-2"></span>
+                  <span v-text="current_attachment_photos + '/'"
+                        :class="['current-photo-attachment',{'red-text' : photo_attachments_exceed_limit()}]"></span>
+                  <span class="max-photo-attachment" v-text="config.max_attachment_photo"></span>
+                </v-layout>
                 <v-layout id="attachments-container" nowrap class="mt-2">
                   <template v-for="(image, index, key) in publication.new.images">
                     <upload-file :file="image.raw" :position="index" :courseid="course.id" class="ma-2"

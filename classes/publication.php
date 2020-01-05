@@ -1,11 +1,11 @@
-<?php 
+<?php
   class local_social_course_publication extends local_social_course_model{
     protected $id;
     protected $courseid;
     protected $authorid;
     protected $comment;
     protected $share;
-    protected $comments; 
+    protected $comments;
     protected $attachments;
     protected $recipients;
 
@@ -13,11 +13,11 @@
       $this->classname = "local_social_course_publication";
       $this->fillable = ["id","courseid","authorid","comment","share","comments", "attachments","recipients"];
       $this->obtainable = ["id","courseid","authorid","comment","share","comments", "attachments","recipients"];
-      $this->attachments = array();     
-      $this->recipients = array();     
-      $this->comments = array();    
+      $this->attachments = array();
+      $this->recipients = array();
+      $this->comments = array();
     }
-    
+
     public static function find($publicationid){
       global $DB;
    }
@@ -29,17 +29,17 @@
       $query_fragment = "";
       if(!empty($startid)){
         $query_fragment = ' and id <= ? ';
-        array_push($params, $startid); 
+        array_push($params, $startid);
       }
       $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid,
-              p.sc_comment as publication_comment, p.sc_groupid_shared as share_groupid, 
+              p.sc_comment as publication_comment, p.sc_groupid_shared as share_groupid,
               p.sc_roleid_shared as share_roleid, p.sc_type_shared as share_type,
               p.sc_name_shared as share_name, p.sc_timecreated as publication_timecreated,
-              p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname, 
-              u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from 
-              {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1) 
-              as author_last_action, u.lastaccess as author_lastaccess from {sc_publications} p, {user} u where 
-              p.sc_authorid = u.id and p.sc_authorid = ? and p.sc_courseid = ? and p.sc_timedeleted IS NULL 
+              p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname,
+              u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from
+              {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1)
+              as author_last_action, u.lastaccess as author_lastaccess from {sc_publications} p, {user} u where
+              p.sc_authorid = u.id and p.sc_authorid = ? and p.sc_courseid = ? and p.sc_timedeleted IS NULL
               $query_fragment order by p.sc_timecreated desc";
       $rows = $DB->get_records_sql($sql, $params, null, $take);
       $publications = self::transform_to_classes($rows);
@@ -53,17 +53,17 @@
       $start_in_id = "";
       if(!empty($startid)){
         $start_in_id = ' and id <= ? ';
-        array_push($params, $startid); 
+        array_push($params, $startid);
       }
-      $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid, 
+      $sql = "select p.id as publication_id, p.sc_courseid as publication_courseid,
               p.sc_comment as publication_comment, p.sc_groupid_shared as share_groupid,
               p.sc_roleid_shared as share_roleid, p.sc_type_shared as share_type,
               p.sc_name_shared as share_name, p.sc_timecreated as publication_timecreated,
-              p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname, 
-              u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from 
-              {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1) 
-              as author_last_action, u.lastaccess as author_lastaccess from {sc_publications} p, {user} u, 
-              {sc_recipients} r where p.sc_authorid = u.id and p.id = r.sc_publicationid and p.sc_authorid = ? 
+              p.sc_authorid as author_id, u.username as author_username, u.firstname as author_firstname,
+              u.lastname as author_lastname, u.email as author_email, (select lsl.timecreated from
+              {logstore_standard_log} lsl where lsl.userid = u.id order by lsl.timecreated desc limit 1)
+              as author_last_action, u.lastaccess as author_lastaccess from {sc_publications} p, {user} u,
+              {sc_recipients} r where p.sc_authorid = u.id and p.id = r.sc_publicationid and p.sc_authorid = ?
               and p.sc_courseid = ? and r.sc_to = ? and r.sc_timedeleted IS NULL and p.sc_timedeleted IS NULL
               $start_in_id order by p.sc_timecreated desc";
       $rows = $DB->get_records_sql($sql, $params, null, $take);
@@ -143,7 +143,7 @@
 
     private function valid_properties(){
       $valid = false;
-      if(!empty($this->courseid) && !empty($this->authorid) && !empty($this->comment) && 
+      if(!empty($this->courseid) && !empty($this->authorid) && !empty($this->comment) &&
           !empty($this->share) && gettype($this->recipients) == "array"){
         $valid = true;
       }

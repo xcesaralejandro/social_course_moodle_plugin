@@ -1,9 +1,10 @@
 <?php
   require_once(dirname(__FILE__) . '/../../config.php');
-  
+
   define('MAX_RECORDS_PER_QUERY', 15);
   define('AJAX_POLLING_SECONDS', 30);
   define('VISIBLE_COMMENTS', 3);
+  define('MAX_ATTACHMENT_PHOTOS', 5);
 
   function dd($var){
     print_object($var);
@@ -46,7 +47,7 @@
     ];
     echo json_encode($response);
   }
-  
+
   function local_social_course_set_api_headers(){
     header('Access-Control-Allow-Origin: *');
     header('Content-type: application/json');

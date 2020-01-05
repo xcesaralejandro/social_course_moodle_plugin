@@ -14,6 +14,7 @@
     $publications->shared_with_me = local_social_course_publication::shared_with($USER->id, $COURSE->id);
     $enrolled = $participants->enrolled();
     $roles = array_values($participants->extract_different_roles_from($enrolled));
+    $config = array("max_attachment_photo" => get_config('local_social_course', 'maxattachmentsphoto'));
     $content = array(
         "enrolled" => array_values($enrolled),
         "groups" => array_values($participants->all_groups()),
@@ -21,6 +22,7 @@
         "user" => $USER,
         "course" => $COURSE,
         "publications" => $publications,
+        "config" => $config,
         "strings" => [
         ],
     );

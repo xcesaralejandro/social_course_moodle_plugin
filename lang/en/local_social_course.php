@@ -1,4 +1,4 @@
-<?php 
+<?php
   // GENERAL
   $string['pluginname'] = 'Social Course';
 
@@ -13,10 +13,12 @@
   $string['cfg_max_records_per_query_title'] = 'Obtener registros';
   $string['cfg_max_records_per_query_desc'] = 'Numero de publicaciones y comentarios que se obtendrán al cargar "más"';
   $string['cfg_ajax_polling_seconds_title'] = 'Tiempo de actualización';
-  $string['cfg_ajax_polling_seconds_desc'] = 'Tiempo de espera para consultar por nueva información al servidor. 
+  $string['cfg_ajax_polling_seconds_desc'] = 'Tiempo de espera para consultar por nueva información al servidor.
                                               (En segundos)';
   $string['cfg_visible_comments_title'] = 'Comentarios visibles';
   $string['cfg_visible_comments_desc'] = 'Numero de comentarios visibles en las publicaciones';
-  
+  $string['cfg_max_photo_attachment_title'] = 'Limite de fotos adjuntas';
+  $string['cfg_max_photo_attachment_desc'] = 'Limita la cantidad de fotos que se pueden adjuntar en una publicación. Si utiliza 0, se ocultará la opción de añadir imagenes.';
+
   // COMMENTS
   $string['deleted_comment'] = 'Comentario eliminado.';
