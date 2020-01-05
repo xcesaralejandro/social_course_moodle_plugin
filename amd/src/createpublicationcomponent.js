@@ -3,7 +3,7 @@ function($, Axios, EmojiOnArea) {
   const ALL = -1
   const WITHOUT = 0
   const createpublication = {
-    template : `<v-content>
+    template : `<v-content id="publication">
                 <v-layout column id="create-publication" class="pa-4 pl-6 pr-6">
                   <v-flex pb-2 d-flex justify-center>
                     <span class="title">NUEVA PUBLICACIÓN</span>
@@ -53,10 +53,12 @@ function($, Axios, EmojiOnArea) {
 
                 <template>
                   <v-row justify="center">
-                    <v-dialog v-model="recipient.selecting" scrollable max-width="800px">
+                    <v-dialog v-model="recipient.selecting" scrollable max-width="800px" id="recipients-dialog">
                       <v-card>
-                        <v-card-title d-flex justify-center>
-                          <span class="headline">¿Quienes deberian ver esto?</span>
+                        <v-card-title>
+                          <v-layout justify-center>
+                            <span class="headline">¿Quienes deberian ver esto?</span>
+                          </v-layout>
                         </v-card-title>
                         <v-card-text class="pb-0">
                           <v-container class="ma-0 pa-0">
@@ -81,9 +83,14 @@ function($, Axios, EmojiOnArea) {
                             <v-layout column>
                               <h5 class="ma-0">Listado de usuarios</h5>
                               <v-divider class="mt-2 mb-2"></v-divider>
-                              <v-text-field placeholder="Buscar..." v-model="search">
-                                <v-icon slot="append" color="gray">search</v-icon>
-                              </v-text-field>
+                              <v-row class="ma-0">
+                                <v-col cols="12" sm="6" offset-sm="6">
+                                  <v-text-field placeholder="Buscar..." v-model="search" class="search-field"
+                                    :clearable="true" clear-icon="clear">
+                                    <v-icon slot="append" color="gray">search</v-icon>
+                                  </v-text-field>
+                                </v-col>
+                              </v-row>
                               <v-list subheader class="people-container">
                               <v-list-item v-for="(person, index, key) in recipients" :key="key" @click="update_recipient(person)">
                                 <v-list-item-avatar>
@@ -97,17 +104,18 @@ function($, Axios, EmojiOnArea) {
                                 </v-list-item-content>
                                 <v-list-item-icon>
                                   <i class="material-icons" v-if="person.is_recipient">done</i>
-                                  <i class="material-icons" v-else>add</i>
+                                  <i class="material-icons" v-else>add_circle_outline</i>
                                 </v-list-item-icon>
                               </v-list-item>
                             </v-list>
                             </v-layout>
                             </v-col>
                           </v-row>
-
+                          </v-container>
+                          </v-card-text>
                         <v-card-actions>
                           <v-layout d-flex justify-center>
-                          <v-btn class="sc-btn-primary" small @click="recipient.selecting = false">Cerrar</v-btn>
+                          <v-btn class="sc-btn-primary ma-0" small @click="recipient.selecting = false">Cerrar</v-btn>
                         </v-layout>
                         </v-card-actions>
                       </v-card>

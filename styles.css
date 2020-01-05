@@ -26,7 +26,7 @@
   text-decoration: none !important;
 }
 .social-course-container .v-input input {
-  display: none !important;
+  display: none;
 }
 .social-course-container .sc-btn-primary {
   background: #3f55ab !important;
@@ -177,6 +177,27 @@
 #publications .max-upload-limited-exceeded, #publications .max-upload-limited-exceeded * {
   color: #e3e3e3 !important;
   border-color: #e3e3e3 !important;
+}
+#publications .search-field input {
+  display: block !important;
+  box-shadow: none !important;
+  border: 0px;
+  margin: 0;
+}
+#publications .v-card__title {
+  background: #3f55ab !important;
+  background-color: #3f55ab !important;
+  text-transform: uppercase;
+  color: white !important;
+}
+#publications .people-container {
+  border: 1px solid #e3e3e3;
+  height: 300px;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+#publications .v-card__actions {
+  border-top: 1px solid #e3e3e3;
 }
 
 /*# sourceMappingURL=styles.css.map */

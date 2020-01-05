@@ -93,4 +93,31 @@
     color: $border-light-color !important;
     border-color: $border-light-color !important;
   }
+
+  .search-field{
+    input{
+      display: block !important;
+      box-shadow: none !important;
+      border: 0px;
+      margin: 0;
+    }
+  }
+
+  .v-card__title{
+    background: $primary-color !important;
+    background-color: $primary-color !important;
+    text-transform: uppercase;
+    color: white !important;
+  }
+
+  .people-container{
+    border: 1px solid $border-light-color;
+    height: 300px;
+    max-height: 250px;
+    overflow-y: scroll;
+  }
+
+  .v-card__actions{
+    border-top: 1px solid $border-light-color;
+  }
 }

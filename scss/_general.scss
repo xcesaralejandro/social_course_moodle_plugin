@@ -31,7 +31,7 @@
   }
 
   .v-input input{
-    display: none !important;
+    display: none;
   }
 
   @mixin standard-button($color, $background, $border-color){
