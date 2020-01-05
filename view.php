@@ -9,14 +9,14 @@
     local_social_course_set_page($course, $url);
     // $core = new local_social_course_core($COURSE->id, $USER->id);
     $participants = new local_social_course_participant($USER->id, $COURSE->id);
-    // $publications = new stdClass();
-    // $publications->mine = local_social_course_publication::created_by($USER->id, $COURSE->id);
-    // $publications->shared_with_me = local_social_course_publication::shared_with($USER->id, $COURSE->id);
-    dd($participants->enrolled());
+    $publications = new stdClass();
+    $publications->mine = local_social_course_publication::created_by($USER->id, $COURSE->id);
+    $publications->shared_with_me = local_social_course_publication::shared_with($USER->id, $COURSE->id);
+    $enrolled = $participants->enrolled();
     $content = array(
-        "enrolled" => $participants->enrolled(),
-        "groups" => $participants->available_groups(),
-        "available_roles" => $participants->get_availables_roles(),
+        "enrolled" => $enrolled,
+        "groups" => $participants->all_groups(),
+        "available_roles" => $participants->extract_different_roles_from($enrolled),
         "user" => $USER,
         "course" => $COURSE,
         "publications" => $publications,
