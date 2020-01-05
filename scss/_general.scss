@@ -13,14 +13,27 @@
     background: $scrollbar-thumb-hover-color;
   }
 
-  .v-application{
+  .v-window-item, .v-window-item--active{
+    background: $background-color !important;
     background-color: $background-color !important;
-    border: 1px solid $border-light-color !important;
   }
 
   .v-text-field__details{
     display: none !important;
   }
+
+  .theme--dark.v-tabs > .v-tabs-bar{
+    a{
+      text-decoration: none !important;
+    }
+    background: $primary-color !important;
+    background-color: $primary-color !important;
+  }
+
+  .v-input input{
+    display: none !important;
+  }
+
   @mixin standard-button($color, $background, $border-color){
     background: $background !important;
     background-color: $background !important;

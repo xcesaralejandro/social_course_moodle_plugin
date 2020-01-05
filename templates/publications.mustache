@@ -1,122 +1,26 @@
-<div id="publications" class="social-course-container">
-  <v-app>
-    <v-content>
-      <v-container class="pa-4">
-        <v-row class="ma-0">
-          <v-col cols="8" class="pa-2">
-            <v-layout column id="create-publication" class="pa-4 pl-6 pr-6">
-              <v-flex pb-2 d-flex justify-center>
-                <span class="title">NUEVA PUBLICACIÓN</span>
-              </v-flex>
-              <v-flex class="mb-2">
-                <textarea id="comment-publication" class="emoji-picker" outlined></textarea>
-              </v-flex>
-
-              <v-flex v-if="exist_attachments">
-                <v-layout justify-end align-center>
-                  <span v-text="attachment_photos_legend()" class="mr-2"></span>
-                  <span v-text="current_attachment_photos + '/'"
-                        class="current-photo-attachment"></span>
-                  <span class="max-photo-attachment" v-text="config.max_attachment_photo"></span>
-                </v-layout>
-                <v-layout id="attachments-container" nowrap class="mt-2">
-                  <template v-for="(image, index, key) in publication.new.images">
-                    <upload-file :file="image.raw" :position="index" :courseid="course.id" class="ma-2"
-                                 :label="upload_file_labels" :authorid="user.id" :key="key"
-                                 @loaded="update_load_status" @delete="remove_image"
-                                 :maxupload="config.max_attachment_photo"></upload-file>
-                  </template>
-                </v-layout>
-              </v-flex>
-
-              <v-flex d-flex justify-center class="action-separator pt-4">
-                <label for="upload-photo" class="ma-0">
-                    <v-flex :class="['label-input-image', 'sc-btn-gray', 'pr-4', 'pl-4', 'pt-1', 'pb-1',
-                                    'd-flex', {'max-upload-limited-exceeded' : photo_attachments_exceed_limit()}]">
-                      <span class="mr-2 d-flex align-center">Adjuntar imagen</span>
-                      <v-icon class="mr-1">add_photo_alternate</v-icon>
-                    </v-flex>
-                  </label>
-                <v-file-input class="d-none" v-if="!photo_attachments_exceed_limit()" class="pa-0 ma-0 hidden" @change="addImage" :accept="accepted_mime_types()"
-                                :multiple="false" prepend-icon="camera_alt" id="upload-photo"></v-file-input>
-                <v-btn small outlined class="ml-2 sc-btn-gray" @click="recipient.selecting = true">
-                  <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon>
-                  <v-icon v-if="selecting_group()" class="mr-1">people</v-icon>
-                  <v-icon v-if="selecting_custom()" class="mr-1">settings_applications</v-icon>
-                  <span v-text="selection_name"></span>
-                </v-btn>
-                <v-btn small class="sc-btn-primary ml-2" @click="publishing()"
-                      >Publicar<v-icon class="ml-2">publish</v-icon></v-btn>
-              </v-flex>
-            </v-layout>
-          </v-col>
-          <v-col cols="4">
-            tarjeta de perfil de usuario acá :V
-          </v-col>
-        </v-row>
-
-        <template>
-          <v-row justify="center">
-            <v-dialog v-model="recipient.selecting" persistent max-width="500px">
-              <v-card>
-                <v-card-title d-flex justify-center>
-                  <span class="headline">¿Quienes deberian ver esto?</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="5">
-                        <v-select item-text="name" item-value="id" :items="available_roles" v-model="role.selected"
-                                  label="Roles"></v-select>
-                      </v-col>
-                      <v-col cols="5">
-                        <v-select item-text="name" item-value="id" :items="groups" v-model="group.selected" label="Grupos"
-                                  item-text="name" item-value="idnumber"></v-select>
-                      </v-col>
-                      <v-col cols="2" class="d-flex align-center">
-                        <v-btn class="mx-2 floating-button-secondary" fab dark small color="primary"
-                               @click="select_recipients_from_filters()">
-                          <v-icon dark>done_all</v-icon>
-                        </v-btn>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col cols="6">
-                        <v-text-field placeholder="Buscar..." v-model="search">
-                          <v-icon slot="append" color="gray">search</v-icon>
-                        </v-text-field>
-                      </v-col>
-                    </v-row>
-
-                    <v-list subheader class="people-container">
-                      <v-list-item v-for="(person, index, key) in recipients" :key="key" @click="update_recipient(person)">
-                        <v-list-item-avatar>
-                          <v-img :src="person.pictureurl"></v-img>
-                        </v-list-item-avatar>
-                        <v-list-item-content>
-                          <v-list-item-title>
-                          <span v-text="person.firstname"></span>
-                          <span v-text="person.lastname"></span>
-                          </v-list-item-title>
-                        </v-list-item-content>
-                        <v-list-item-icon>
-                          <i class="material-icons" v-if="person.is_recipient">done</i>
-                          <i class="material-icons" v-else>add</i>
-                        </v-list-item-icon>
-                      </v-list-item>
-                    </v-list>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-flex class="text-center" v-html="recipients_summary()"></v-flex>
-                  <div class="flex-grow-1"></div>
-                  <v-btn class="sc-btn-gray" small @click="recipient.selecting = false">Cerrar</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-row>
-        </template>
-      </v-container>
-    </v-content>
-  </v-app>
-</div>
+<v-app id="publications" class="social-course-container">
+    <template>
+      <v-tabs center dark v-model="maintabs">
+          <v-tab>Inicio</v-tab>
+          <v-tab>Mis publicaciones</v-tab>
+          <v-tab-item>
+            <v-container fluid class="pa-6">
+              aaaaaaaaaa
+            </v-container>
+          </v-tab-item>
+          <v-tab-item>
+            <v-container fluid class="pa-6">
+              <v-row class="ma-0">
+                <v-col cols="8">
+                  <create-publication :config="config" :course="course" :user="user" :enrolled="enrolled"
+                                      :available_roles="available_roles" :groups="groups"></create-publication>
+                </v-col>
+                <v-col cols="4">
+                bbbbbbbbbbb
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-tab-item>
+      </v-tabs>
+    </template>
+</v-app>
