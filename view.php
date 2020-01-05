@@ -13,10 +13,11 @@
     $publications->mine = local_social_course_publication::created_by($USER->id, $COURSE->id);
     $publications->shared_with_me = local_social_course_publication::shared_with($USER->id, $COURSE->id);
     $enrolled = $participants->enrolled();
+    $roles = array_values($participants->extract_different_roles_from($enrolled));
     $content = array(
-        "enrolled" => $enrolled,
-        "groups" => $participants->all_groups(),
-        "available_roles" => $participants->extract_different_roles_from($enrolled),
+        "enrolled" => array_values($enrolled),
+        "groups" => array_values($participants->all_groups()),
+        "available_roles" =>$roles,
         "user" => $USER,
         "course" => $COURSE,
         "publications" => $publications,

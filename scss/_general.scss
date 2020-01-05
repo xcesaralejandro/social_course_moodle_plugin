@@ -1,0 +1,62 @@
+.social-course-container{
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: $scrollbar-background-color;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb-color;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: $scrollbar-thumb-hover-color;
+  }
+
+  .v-application{
+    background-color: $background-color !important;
+    border: 1px solid $border-light-color !important;
+  }
+
+  .v-text-field__details{
+    display: none !important;
+  }
+  @mixin standard-button($color, $background, $border-color){
+    background: $background !important;
+    background-color: $background !important;
+    border: 1px solid $border-color !important;
+    color: $color !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: all .3s ease;
+    border-radius: 50px;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    font-size: .9rem !important;
+    letter-spacing: 0;
+    i{
+      font-size: 1rem !important;
+      color: $color !important;
+    }
+  }
+
+  .sc-btn-primary{
+    @include standard-button(white, $primary-color, $primary-color-dark);
+  }
+
+  .sc-btn-secondary{
+    @include standard-button(white, $secondary-color, $secondary-color-dark);
+  }
+
+  .sc-btn-gray{
+    @include standard-button($standard-text-color, white, $standard-text-color);
+  }
+
+  .unselectable {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}

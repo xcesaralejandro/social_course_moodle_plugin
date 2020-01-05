@@ -1,4 +1,4 @@
-<?php 
+<?php
 class local_social_course_file{
   protected $id;
   protected $publicationid;
@@ -11,14 +11,14 @@ class local_social_course_file{
   protected $mimetype;
   protected $timecreated;
   protected $timedeleted;
-  
+
   function __construct(){
     $this->component = "local_social_course";
     $this->filearea = "social_course_attachment";
     $this->filepath = "/";
     $this->timecreated = time();
   }
-  
+
   public static function associate($files, $publicationid, $userid){
     if(empty($files)){
       return true;
@@ -31,7 +31,7 @@ class local_social_course_file{
     $updated = $DB->execute($sql, $params);
     return $updated;
   }
-  
+
   public function get_resource($id){
     $file = self::find($id);
     if(!$file){
@@ -127,8 +127,8 @@ class local_social_course_file{
 
   private function file_exist(){
     $storage = get_file_storage();
-    $exist = $storage->file_exists($this->contextid, $this->component, $this->filearea, $this->itemid, 
-                                   $this->filepath, $this->filename); 
+    $exist = $storage->file_exists($this->contextid, $this->component, $this->filearea, $this->itemid,
+                                   $this->filepath, $this->filename);
     return $exist;
   }
 

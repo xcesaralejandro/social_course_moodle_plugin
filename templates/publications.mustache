@@ -1,12 +1,12 @@
-<div id="publications">
+<div id="publications" class="social-course-container">
   <v-app>
     <v-content>
-      <v-container>
-        <v-row>
-          <v-col cols="8" pa-2>
-            <v-layout column id="create-publication" pa-4>
-              <v-flex pb-2>
-                <span class="title">Nueva publicación</span>
+      <v-container class="pa-4">
+        <v-row class="ma-0">
+          <v-col cols="8" class="pa-2">
+            <v-layout column id="create-publication" class="pa-4 pl-6 pr-6">
+              <v-flex pb-2 d-flex justify-center>
+                <span class="title">NUEVA PUBLICACIÓN</span>
               </v-flex>
               <v-flex class="mb-2">
                 <textarea id="comment-publication" class="emoji-picker" outlined></textarea>
@@ -14,44 +14,40 @@
               <v-flex id="attachments" d-flex justify-center align-center>
                 <v-layout id="photos-container">
                   <label for="upload-photo" class="ma-0">
-                    <v-flex class="label-input-image sc-btn-secondary pr-4 pl-4 pt-1 pb-1 d-flex">
+                    <v-flex class="label-input-image sc-btn-gray pr-4 pl-4 pt-1 pb-1 d-flex">
                       <span class="mr-2 d-flex align-center">Adjuntar imagen</span>
                       <v-icon class="mr-1">add_photo_alternate</v-icon>
                     </v-flex>
                   </label>
-                  <v-file-input class="pa-0 ma-0 hidden" @change="addImage" :accept="accepted_mime_types()" 
+                  <v-file-input class="pa-0 ma-0 hidden" @change="addImage" :accept="accepted_mime_types()"
                                 :multiple="true" prepend-icon="camera_alt" id="upload-photo"></v-file-input>
                 </v-layout>
                 <v-layout>
-                  Grabar audio 
+                  Grabar audio
                 </v-layout>
-
-                <v-layout>
-                  adjuntar archivo 
-                </v-layout>
-
               </v-flex>
+
               <v-flex v-if="exist_attachments">
                 <v-divider></v-divider>
                 <v-layout id="attachments-container" nowrap class="mt-2">
                   <template v-for="(image, index, key) in publication.new.images">
                     <upload-file :file="image.raw" :position="index" :courseid="course.id" class="ma-2"
-                                 :label="upload_file_labels" :authorid="user.id" :key="key" 
+                                 :label="upload_file_labels" :authorid="user.id" :key="key"
                                  @loaded="update_load_status" @delete="remove_image"></upload-file>
                   </template>
                 </v-layout>
               </v-flex>
 
               <v-divider></v-divider>
-              <v-flex d-flex justify-end class="action-separator">
-                <v-btn small outlined class="ml-2 sc-btn-secondary" @click="recipient.selecting = true">
-                  <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon> 
+              <v-flex d-flex justify-center class="action-separator">
+                <v-btn small outlined class="ml-2 sc-btn-gray" @click="recipient.selecting = true">
+                  <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon>
                   <v-icon v-if="selecting_group()" class="mr-1">people</v-icon>
                   <v-icon v-if="selecting_custom()" class="mr-1">settings_applications</v-icon>
                   <span v-text="selection_name"></span>
                 </v-btn>
-                <v-btn small class="sc-btn-primary ml-2" @click="publishing()" 
-                      >Publicar</v-btn>
+                <v-btn small class="sc-btn-primary ml-2" @click="publishing()"
+                      >Publicar<v-icon class="ml-2">publish</v-icon></v-btn>
               </v-flex>
             </v-layout>
           </v-col>
@@ -71,15 +67,15 @@
                   <v-container>
                     <v-row>
                       <v-col cols="5">
-                        <v-select item-text="name" item-value="id" :items="available_roles" v-model="role.selected" 
+                        <v-select item-text="name" item-value="id" :items="available_roles" v-model="role.selected"
                                   label="Roles"></v-select>
                       </v-col>
                       <v-col cols="5">
-                        <v-select item-text="name" item-value="id" :items="groups" v-model="group.selected" label="Grupos" 
+                        <v-select item-text="name" item-value="id" :items="groups" v-model="group.selected" label="Grupos"
                                   item-text="name" item-value="idnumber"></v-select>
                       </v-col>
                       <v-col cols="2" class="d-flex align-center">
-                        <v-btn class="mx-2 floating-button-secondary" fab dark small color="primary" 
+                        <v-btn class="mx-2 floating-button-secondary" fab dark small color="primary"
                                @click="select_recipients_from_filters()">
                           <v-icon dark>done_all</v-icon>
                         </v-btn>
@@ -115,7 +111,7 @@
                 <v-card-actions>
                   <v-flex class="text-center" v-html="recipients_summary()"></v-flex>
                   <div class="flex-grow-1"></div>
-                  <v-btn class="sc-btn-secondary" small @click="recipient.selecting = false">Cerrar</v-btn>
+                  <v-btn class="sc-btn-gray" small @click="recipient.selecting = false">Cerrar</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>

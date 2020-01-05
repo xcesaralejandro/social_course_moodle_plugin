@@ -1,0 +1,82 @@
+#publications{
+  #create-publication{
+    background: white !important;
+    border: 1px solid $border-light-color;
+    border-radius: 4px;
+  }
+
+  .upload-file-container{
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 180px !important;
+    width: 180px !important;
+    max-width: 180px !important;
+    .upload-file-header, .upload-file-footer{
+      background: #efefef;
+      text-transform: uppercase;
+    }
+    .upload-file-content{
+      min-height: 150px !important;
+    }
+
+    .fit-image-to-parent{
+      min-height: 180px !important;
+      max-height: 180px !important;
+    }
+
+    #preview-image-container{
+      max-height: 250px;
+      overflow-y: scroll;
+      background: #eeeeee;
+      border: 1px solid #ccc;
+      .image-container{
+        min-width: 150px;
+        min-height: 100px;
+        height: 150px;
+        width: 100px;
+        max-width: 150px;
+        max-height: 100px;
+        position: relative;
+        img{
+          width: 100%;
+          height: 100%;
+          border: 1px solid #888888;
+        }
+      }
+      .delete-image{
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.7);
+        border-left: 5px solid white;
+        border-bottom: 5px solid white;
+        transition: all .5s ease;
+        text-align: right;
+        i{
+          opacity: 1;
+          color: #444444 !important;
+          cursor: pointer !important;
+        }
+      }
+      .label-input-image {
+        cursor: pointer;
+      }
+      #photos-container .hidden{
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+      }
+
+    }
+  }
+
+  .remove-file{
+    cursor: pointer;
+  }
+
+  #attachments-container{
+    overflow-x: scroll !important;
+    border: 1px solid #f1f1f1;
+  }
+}

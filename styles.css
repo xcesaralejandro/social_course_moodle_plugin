@@ -1,68 +1,116 @@
-﻿#publications ::-webkit-scrollbar {
+.social-course-container ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-
-#publications ::-webkit-scrollbar-track {
+.social-course-container ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-
-#publications ::-webkit-scrollbar-thumb {
+.social-course-container ::-webkit-scrollbar-thumb {
   background: #888;
 }
-#publications ::-webkit-scrollbar-thumb:hover {
+.social-course-container ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-#publications #create-publication{
-  border: 1px solid #dfdfdf;
-  background: white !important;
-  border-radius: 4px;
+.social-course-container .v-application {
+  background-color: #f5f5f5 !important;
+  border: 1px solid #e3e3e3 !important;
 }
-
-#publications .v-text-field__details{
+.social-course-container .v-text-field__details {
   display: none !important;
 }
-
-.sc-btn-primary{
+.social-course-container .sc-btn-primary {
+  background: #3f55ab !important;
+  background-color: #3f55ab !important;
+  border: 1px solid #384991 !important;
+  color: white !important;
   box-shadow: none !important;
   outline: none !important;
-  color: #0087ff !important;
-  background: white !important;
-  border-radius: 0px;
-  border: 1px solid #0087ff;
-  box-shadow: none !important;
+  transition: all 0.3s ease;
   border-radius: 50px;
-  transition: all .3s ease;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0;
 }
-
-.sc-btn-secondary{
+.social-course-container .sc-btn-primary i {
+  font-size: 1rem !important;
+  color: white !important;
+}
+.social-course-container .sc-btn-secondary {
+  background: #ffa600 !important;
+  background-color: #ffa600 !important;
+  border: 1px solid #d78c0d !important;
+  color: white !important;
   box-shadow: none !important;
   outline: none !important;
-  border: 1px solid #99a1a9 !important;
-  color: #6a7177 !important;
-  border-radius: 50px !important;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
+  border-radius: 50px;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0;
+}
+.social-course-container .sc-btn-secondary i {
+  font-size: 1rem !important;
+  color: white !important;
+}
+.social-course-container .sc-btn-gray {
+  background: white !important;
+  background-color: white !important;
+  border: 1px solid #444444 !important;
+  color: #444444 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: all 0.3s ease;
+  border-radius: 50px;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0;
+}
+.social-course-container .sc-btn-gray i {
+  font-size: 1rem !important;
+  color: #444444 !important;
+}
+.social-course-container .unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-#publications .btn-share-with i{
-  font-size: 1.4rem !important;
-}
-
-
-#publications .recipients-button{
-  border: 1px solid #dfdfdf;
+#publications #create-publication {
+  background: white !important;
+  border: 1px solid #e3e3e3;
   border-radius: 4px;
 }
-
-#publications #preview-image-container{
+#publications .upload-file-container {
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  overflow: hidden;
+  min-width: 180px !important;
+  width: 180px !important;
+  max-width: 180px !important;
+}
+#publications .upload-file-container .upload-file-header, #publications .upload-file-container .upload-file-footer {
+  background: #efefef;
+  text-transform: uppercase;
+}
+#publications .upload-file-container .upload-file-content {
+  min-height: 150px !important;
+}
+#publications .upload-file-container .fit-image-to-parent {
+  min-height: 180px !important;
+  max-height: 180px !important;
+}
+#publications .upload-file-container #preview-image-container {
   max-height: 250px;
   overflow-y: scroll;
   background: #eeeeee;
   border: 1px solid #ccc;
 }
-
-#publications .image-container{
+#publications .upload-file-container #preview-image-container .image-container {
   min-width: 150px;
   min-height: 100px;
   height: 150px;
@@ -71,99 +119,40 @@
   max-height: 100px;
   position: relative;
 }
-
-#publications .image-container img{
+#publications .upload-file-container #preview-image-container .image-container img {
   width: 100%;
   height: 100%;
   border: 1px solid #888888;
 }
-
-#publications .delete-image{
+#publications .upload-file-container #preview-image-container .delete-image {
   position: absolute;
   top: 0;
   right: 0;
   background: rgba(255, 255, 255, 0.7);
   border-left: 5px solid white;
   border-bottom: 5px solid white;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   text-align: right;
 }
-
-#publications .delete-image i{
+#publications .upload-file-container #preview-image-container .delete-image i {
   opacity: 1;
   color: #444444 !important;
   cursor: pointer !important;
 }
-
-#publications .emojionearea .emojionearea-editor{
-  width: 100% !important;
-  height: 100% !important;
-}
-
-#publications .floating-button-secondary{
-  outline: none !important;
-  background: white !important;
-  color: #6a7177 !important;
-  border-radius: 0 !important;
-  background-color: white !important;
-  box-shadow: none !important;
-  border: 1px solid #6a7177 !important;
-  border-radius: 50% !important;
-}
-#publications .label-input-image {
+#publications .upload-file-container #preview-image-container .label-input-image {
   cursor: pointer;
- }
-
- #photos-container .hidden{
+}
+#publications .upload-file-container #preview-image-container #photos-container .hidden {
   opacity: 0;
   position: absolute;
   z-index: -1;
- }
-
-.emojionearea,.emoji-picker{
-  box-shadow: none !important;
-  outline: none !important;
-  border-color: #cccccc !important;
-  font-size: 1rem !important;
 }
-
-.upload-file-container{
-  border: 1px solid #dedede;
-  border-radius: 4px;
-  overflow: hidden;
-  min-width: 180px !important;
-  width: 180px !important;
-  max-width: 180px !important;
+#publications .remove-file {
+  cursor: pointer;
 }
-
-.upload-file-container .upload-file-header,
-.upload-file-container .upload-file-footer{
-  background: #efefef;
-  text-transform: uppercase;
-}
-
-#attachments-container{
+#publications #attachments-container {
   overflow-x: scroll !important;
   border: 1px solid #f1f1f1;
 }
 
-.upload-file-content{
-  min-height: 150px !important;
-}
-
-.fit-image-to-parent{
-  min-height: 180px !important;
-  max-height: 180px !important;
-}
-
-.unselectable {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.remove-file{
-  cursor: pointer;
-}
+/*# sourceMappingURL=styles.css.map */

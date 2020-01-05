@@ -5,15 +5,15 @@ define(['local_social_course/axios'], function(Axios) {
       <v-layout column>
         <v-flex class="upload-file-header pa-1 d-flex justify-space-around caption">
           <span v-text="get_title()" v-if="!status.is_success"></span>
-          <span v-if="status.is_success" v-text=" position + ' - ' +  label.delete" @click="remove()" class="remove-file"></span>
+          <span v-if="status.is_success" v-text="label.delete" @click="remove()" class="remove-file"></span>
         </v-flex>
         <v-flex v-if="uploading()" class="upload-file-content pa-2 d-flex justify-center align-center">
-          <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage" 
+          <v-progress-circular :rotate="360" :size="100" :width="5" :value="upload.percentage"
                                :color="progress_color()">
             {{ upload.percentage }}
           </v-progress-circular>
         </v-flex>
-        <v-flex v-if="status.is_success && is_image()" class="upload-file-content d-flex justify-center 
+        <v-flex v-if="status.is_success && is_image()" class="upload-file-content d-flex justify-center
                 align-center">
           <img :src="local_url()" width="1920" class="fit-image-to-parent" />
         </v-flex>
@@ -59,15 +59,15 @@ define(['local_social_course/axios'], function(Axios) {
         let name = this.file.name
         if(this.file.name.length > 15 ){
           name = `${name.substring(0, 15)}...`
-        } 
+        }
         return name
       },
       status(){
         let status = new Object
-        status.is_error = this.upload.status == 'error' 
+        status.is_error = this.upload.status == 'error'
         status.is_success = this.upload.status == 'success'
         status.is_inprogress = this.upload.status == 'inprogress'
-        return status 
+        return status
       }
     },
     methods : {
@@ -126,12 +126,12 @@ define(['local_social_course/axios'], function(Axios) {
         byte = this.file.size
         if(byte > 0){
           let kilobyte = this.file.size / 1024
-          size = kilobyte 
+          size = kilobyte
           unit = 'KB'
         }
         if(size >= 1024){
           let megabyte = size / 1024
-          size = megabyte 
+          size = megabyte
           unit = 'MB'
         }
         size = `(${size.toFixed(1)} ${unit})`
@@ -139,15 +139,15 @@ define(['local_social_course/axios'], function(Axios) {
       },
       notify_load_complete(){
         let notice = new Object
-        notice.resource = this.resource 
-        notice.position = this.position 
+        notice.resource = this.resource
+        notice.position = this.position
         this.$emit('loaded', notice)
       },
-      
+
       notify_delete(){
         let notice = new Object
-        notice.resource = this.resource 
-        notice.position = this.position 
+        notice.resource = this.resource
+        notice.position = this.position
         this.$emit('delete', notice)
       },
 
@@ -164,10 +164,10 @@ define(['local_social_course/axios'], function(Axios) {
         let green = '#8bc34a'
         var color = red
         if(this.status.is_inprogress){
-          color = gray 
+          color = gray
         }
         if(this.status.is_success){
-          color = green 
+          color = green
         }
         return color
       },

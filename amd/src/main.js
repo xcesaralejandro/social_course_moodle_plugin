@@ -1,17 +1,18 @@
 define(["jquery",
-        "local_social_course/vue", 
-        "local_social_course/vuetify", 
+        "local_social_course/vue",
+        "local_social_course/vuetify",
         "local_social_course/axios",
         "local_social_course/moment",
         "local_social_course/emojionearea",
         "local_social_course/uploadfilecomponent",
-      ], 
+      ],
 function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
   "use strict";
   const ALL = -1
   const WITHOUT = 0
 
   function add_initial_properties (data){
+    console.log(data)
     data.enrolled.forEach(user => {
       user.is_recipient = true
     })
@@ -27,7 +28,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
       delimiters: ["[[", "]]"],
       el: "#publications",
       vuetify: new Vuetify(),
-      data(){  
+      data(){
         return {
           course : data.course,
           user : data.user,
@@ -89,8 +90,9 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
       },
       mounted() {
         $(".emoji-picker").emojioneArea({
-          pickerPosition: "right",
+          pickerPosition: "bottom",
           tonesStyle: "bullet",
+          search : false,
           placeholder: "¿Que tienes en mente?"
         });
         this.add_default_availables_roles()
@@ -133,7 +135,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           return users
         },
         upload_file_labels(){
-          let labels = {status : {inprogress : 'Subiendo...', success : 'Almacenado', error : 'Error'}, 
+          let labels = {status : {inprogress : 'Subiendo...', success : 'Almacenado', error : 'Error'},
                        delete : 'eliminar'}
           return labels
         },
@@ -156,7 +158,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           let without_group = false
           if(finded){
             without_group = true
-          } 
+          }
           return without_group
         },
         filter_users_by_group(users){
@@ -182,7 +184,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           let users = this.recipient.enrolled.filter(user => { return user.groups.length == 0})
           return users
         },
-        
+
         filter_users_by_role(users){
           var filtered = []
           if(this.role.selected == ALL){
@@ -249,7 +251,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             this.publication.new.images.unshift(image)
           })
         },
-        
+
         update_load_status(notice){
           if(this.image_exist(notice.position)){
             let position = notice.position
@@ -265,7 +267,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             this.publication.new.images.splice(position, 1)
           }
         },
-        
+
         image_exist(position){
           let exist = typeof(this.publication.new.images[position]) != 'undefined'
           return exist
@@ -287,7 +289,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
         },
 
         select_recipients_from_filters(){
-          this.set_group_selection()  
+          this.set_group_selection()
           var users = this.filter_users_by_group(this.recipient.enrolled)
           users = this.filter_users_by_role(users)
           this.clear_recipients()
@@ -296,7 +298,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
 
         set_group_selection(){
           this.selection.type = "group"
-          this.selection.group_id = this.group.selected 
+          this.selection.group_id = this.group.selected
           this.selection.role_id = this.role.selected
           this.selection.is_custom = false
         },
@@ -342,7 +344,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             }
           })
         },
-        
+
         extract_from(values, fieldname){
           values = values.map( value => {return value[fieldname]})
           return values
@@ -350,7 +352,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
 
         recipients_summary(){
           let selected = this.get_selected_recipients()
-          let message = `<span class="caption">Esta publicación se compartirá con: 
+          let message = `<span class="caption">Esta publicación se compartirá con:
                          <strong>${selected.length}</strong> personas.</span>`
           return message
         },
@@ -368,7 +370,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
 
         get_publication_content(){
           let content = document.querySelector('#comment-publication').value
-          return content 
+          return content
         },
 
         publishing(){
@@ -385,7 +387,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             ts : this.selection.type,
             ns : this.selection_name,
             gs : this.selection.group_id,
-            rs : this.selection.role_id, 
+            rs : this.selection.role_id,
           }
 
           Axios.get(route, {params: params})
@@ -397,7 +399,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           .catch(error => {
           })
           .finally(() => {
-          });  
+          });
         },
 
         clear_publication(){
@@ -406,7 +408,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
           this.publication.new.images = []
           this.publication.new.resources = []
         },
-        
+
         uploads_finished(){
           let finished = true
           if(!this.upload_images_finished() || !this.upload_resources_finished()){
