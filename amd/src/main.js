@@ -248,7 +248,7 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
             image.url = new Object
             image.url.local = URL.createObjectURL(file)
             image.url.server = null
-            this.publication.new.images.unshift(image)
+            this.publication.new.images.push(image)
           })
         },
 
