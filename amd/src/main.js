@@ -246,6 +246,9 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
         },
 
         addImage(files){
+          if(this.photo_attachments_exceed_limit()){
+            return null
+          }
           files.forEach((file) => {
             var image = new Object
             image.raw = file
@@ -445,14 +448,14 @@ function($, Vue, Vuetify, Axios, Moment, Emojionearea, Uploadfile) {
 
         photo_attachments_exceed_limit(){
           let current = this.publication.new.images.length
-          let exceed = current > this.config.max_attachment_photo
+          let exceed = current >= this.config.max_attachment_photo
           console.log(exceed);
           return exceed
         },
         attachment_photos_legend(){
           let legend = ""
           if(this.photo_attachments_exceed_limit()){
-            legend = `Limite de fotos adjuntas superado.`
+            legend = `Has alcanzado el numero maximo de adjuntos permitidos.`
           }
           return legend
         }

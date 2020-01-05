@@ -89,7 +89,8 @@
     font-size: 1rem !important;
   }
 
-  .red-text{
-    color: red !important;
+  .max-upload-limited-exceeded, .max-upload-limited-exceeded *{
+    color: $border-light-color !important;
+    border-color: $border-light-color !important;
   }
 }

@@ -47,7 +47,7 @@ define(['local_social_course/axios'], function(Axios) {
         }
       }
     },
-    props : ['file','position', 'courseid', 'authorid', 'label'],
+    props : ['file','position', 'courseid', 'authorid', 'label','maxupload'],
     watch : {
       position(oldVal, newVal){
         console.log("change old", oldVal)
@@ -72,6 +72,10 @@ define(['local_social_course/axios'], function(Axios) {
     },
     methods : {
       push(){
+        if((this.position + 1) > this.maxupload){
+          this.upload.status = 'error'
+          return null
+        }
         let config = {
           onUploadProgress: progressEvent => {
             this.upload.percentage = Math.floor((progressEvent.loaded * 100) / progressEvent.total);

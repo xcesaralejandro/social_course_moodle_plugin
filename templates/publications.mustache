@@ -11,41 +11,34 @@
               <v-flex class="mb-2">
                 <textarea id="comment-publication" class="emoji-picker" outlined></textarea>
               </v-flex>
-              <v-flex id="attachments" d-flex justify-center align-center>
-                <v-layout id="photos-container" v-if="render_image_attachments()">
-                  <label for="upload-photo" class="ma-0">
-                    <v-flex class="label-input-image sc-btn-gray pr-4 pl-4 pt-1 pb-1 d-flex">
-                      <span class="mr-2 d-flex align-center">Adjuntar imagen</span>
-                      <v-icon class="mr-1">add_photo_alternate</v-icon>
-                    </v-flex>
-                  </label>
-                  <v-file-input class="pa-0 ma-0 hidden" @change="addImage" :accept="accepted_mime_types()"
-                                :multiple="true" prepend-icon="camera_alt" id="upload-photo"></v-file-input>
-                </v-layout>
-                <v-layout>
-                  Grabar audio
-                </v-layout>
-              </v-flex>
 
               <v-flex v-if="exist_attachments">
-                <v-divider></v-divider>
                 <v-layout justify-end align-center>
-                  <span v-text="attachment_photos_legend()" class="red-text mr-2"></span>
+                  <span v-text="attachment_photos_legend()" class="mr-2"></span>
                   <span v-text="current_attachment_photos + '/'"
-                        :class="['current-photo-attachment',{'red-text' : photo_attachments_exceed_limit()}]"></span>
+                        class="current-photo-attachment"></span>
                   <span class="max-photo-attachment" v-text="config.max_attachment_photo"></span>
                 </v-layout>
                 <v-layout id="attachments-container" nowrap class="mt-2">
                   <template v-for="(image, index, key) in publication.new.images">
                     <upload-file :file="image.raw" :position="index" :courseid="course.id" class="ma-2"
                                  :label="upload_file_labels" :authorid="user.id" :key="key"
-                                 @loaded="update_load_status" @delete="remove_image"></upload-file>
+                                 @loaded="update_load_status" @delete="remove_image"
+                                 :maxupload="config.max_attachment_photo"></upload-file>
                   </template>
                 </v-layout>
               </v-flex>
 
-              <v-divider></v-divider>
-              <v-flex d-flex justify-center class="action-separator">
+              <v-flex d-flex justify-center class="action-separator pt-4">
+                <label for="upload-photo" class="ma-0">
+                    <v-flex :class="['label-input-image', 'sc-btn-gray', 'pr-4', 'pl-4', 'pt-1', 'pb-1',
+                                    'd-flex', {'max-upload-limited-exceeded' : photo_attachments_exceed_limit()}]">
+                      <span class="mr-2 d-flex align-center">Adjuntar imagen</span>
+                      <v-icon class="mr-1">add_photo_alternate</v-icon>
+                    </v-flex>
+                  </label>
+                <v-file-input class="d-none" v-if="!photo_attachments_exceed_limit()" class="pa-0 ma-0 hidden" @change="addImage" :accept="accepted_mime_types()"
+                                :multiple="false" prepend-icon="camera_alt" id="upload-photo"></v-file-input>
                 <v-btn small outlined class="ml-2 sc-btn-gray" @click="recipient.selecting = true">
                   <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon>
                   <v-icon v-if="selecting_group()" class="mr-1">people</v-icon>

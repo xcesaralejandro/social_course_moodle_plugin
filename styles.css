@@ -79,6 +79,9 @@
   -ms-user-select: none;
   user-select: none;
 }
+.social-course-container .d-none {
+  display: none !important;
+}
 
 #publications #create-publication {
   background: white !important;
@@ -161,8 +164,9 @@
 #publications .max-photo-attachment {
   font-size: 1rem !important;
 }
-#publications .red-text {
-  color: red !important;
+#publications .error-text, #publications .error-text * {
+  color: #e3e3e3 !important;
+  border-color: #e3e3e3 !important;
 }
 
 /*# sourceMappingURL=styles.css.map */
