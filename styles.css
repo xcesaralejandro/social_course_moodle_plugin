@@ -40,6 +40,8 @@
   box-shadow: none !important;
   text-shadow: none !important;
   font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  height: 28px;
   letter-spacing: 0;
 }
 .social-course-container .sc-btn-primary i {
@@ -58,6 +60,8 @@
   box-shadow: none !important;
   text-shadow: none !important;
   font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  height: 28px;
   letter-spacing: 0;
 }
 .social-course-container .sc-btn-secondary i {
@@ -76,6 +80,8 @@
   box-shadow: none !important;
   text-shadow: none !important;
   font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  height: 28px;
   letter-spacing: 0;
 }
 .social-course-container .sc-btn-gray i {
@@ -107,7 +113,7 @@
   max-width: 180px !important;
 }
 #publications .upload-file-container .upload-file-header, #publications .upload-file-container .upload-file-footer {
-  background: #efefef;
+  background: white;
   text-transform: uppercase;
 }
 #publications .upload-file-container .upload-file-content {
@@ -165,7 +171,7 @@
 }
 #publications #attachments-container {
   overflow-x: scroll !important;
-  border: 1px solid #f1f1f1;
+  background: #f1f1f1;
 }
 #publications .current-photo-attachment {
   font-size: 1rem !important;

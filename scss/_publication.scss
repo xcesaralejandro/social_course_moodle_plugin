@@ -13,7 +13,7 @@
     width: 180px !important;
     max-width: 180px !important;
     .upload-file-header, .upload-file-footer{
-      background: #efefef;
+      background: white;
       text-transform: uppercase;
     }
     .upload-file-content{
@@ -77,7 +77,7 @@
 
   #attachments-container{
     overflow-x: scroll !important;
-    border: 1px solid #f1f1f1;
+    background: $background-secondary-color;
   }
 
   .current-photo-attachment{

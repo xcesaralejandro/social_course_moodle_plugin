@@ -40,13 +40,13 @@ function($, Axios, EmojiOnArea) {
                       </label>
                     <v-file-input  v-if="!photo_attachments_exceed_limit()" class="pa-0 ma-0 hidden d-none" @change="addImage" :accept="accepted_mime_types()"
                                     :multiple="false" prepend-icon="camera_alt" id="upload-photo"></v-file-input>
-                    <v-btn small outlined class="ml-2 sc-btn-gray" @click="recipient.selecting = true">
+                    <v-btn small outlined class="ma-0 ml-2 sc-btn-gray" @click="recipient.selecting = true">
                       <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon>
                       <v-icon v-if="selecting_group()" class="mr-1">people</v-icon>
                       <v-icon v-if="selecting_custom()" class="mr-1">settings_applications</v-icon>
                       <span v-text="selection_name"></span>
                     </v-btn>
-                    <v-btn small class="sc-btn-primary ml-2" @click="publishing()"
+                    <v-btn small class="sc-btn-primary ma-0 ml-2" @click="publishing()"
                           >Publicar<v-icon class="ml-2">publish</v-icon></v-btn>
                   </v-flex>
                 </v-layout>
@@ -113,7 +113,7 @@ function($, Axios, EmojiOnArea) {
                           </v-row>
                           </v-container>
                           </v-card-text>
-                        <v-card-actions>
+                        <v-card-actions class="unselectable">
                           <v-layout d-flex justify-center>
                           <v-btn class="sc-btn-primary ma-0" small @click="recipient.selecting = false">Cerrar</v-btn>
                         </v-layout>

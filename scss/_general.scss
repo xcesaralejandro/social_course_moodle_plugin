@@ -34,7 +34,7 @@
     display: none;
   }
 
-  @mixin standard-button($color, $background, $border-color){
+  @mixin standard-button($color, $background, $border-color, $height: 28px){
     background: $background !important;
     background-color: $background !important;
     border: 1px solid $border-color !important;
@@ -46,6 +46,8 @@
     box-shadow: none !important;
     text-shadow: none !important;
     font-size: .9rem !important;
+    font-weight: 500 !important;
+    height: $height !important;
     letter-spacing: 0;
     i{
       font-size: 1rem !important;
