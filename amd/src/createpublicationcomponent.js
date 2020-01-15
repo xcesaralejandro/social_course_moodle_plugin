@@ -137,6 +137,7 @@ function($, Axios, EmojiOnArea) {
     props : ['config', 'course', 'user', 'available_roles', 'enrolled', 'groups'],
     data(){
       return {
+        preselect_filters : true,
         selection : {
           is_custom : false,
           type : "all",
@@ -223,6 +224,7 @@ function($, Axios, EmojiOnArea) {
         }else if (this.selecting_custom()){
           name = 'Personalizado'
         }
+        this.preselect_filters = false
         return name
       },
       current_attachment_photos(){
@@ -310,11 +312,11 @@ function($, Axios, EmojiOnArea) {
         })
       },
       selecting_all(){
-        var selection = this.group.selected == ALL && this.role.selected == ALL && !this.selection.is_custom
+        var selection = this.group.selected == ALL && this.preselect_filters && this.role.selected == ALL && !this.selection.is_custom
         return selection
       },
       selecting_group(){
-        var selection = this.selection.type == 'group' && !this.selection.is_custom && !this.selecting_all()
+        var selection = this.selection.type == 'group' && this.preselect_filters && !this.selection.is_custom && !this.selecting_all()
         return selection
       },
       selecting_custom(){
@@ -466,6 +468,7 @@ function($, Axios, EmojiOnArea) {
       },
 
       select_recipients_from_filters(){
+        this.preselect_filters = true
         this.set_group_selection()
         var users = this.filter_users_by_group(this.recipient.enrolled)
         users = this.filter_users_by_role(users)
