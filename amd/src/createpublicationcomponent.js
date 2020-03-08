@@ -41,9 +41,9 @@ function($, Axios, EmojiOnArea) {
                     <v-file-input  v-if="!photo_attachments_exceed_limit()" class="pa-0 ma-0 hidden d-none" @change="addImage" :accept="accepted_mime_types()"
                                     :multiple="false" prepend-icon="camera_alt" id="upload-photo"></v-file-input>
                     <v-btn small outlined class="ma-0 ml-2 sc-btn-gray" @click="recipient.selecting = true">
-                      <v-icon v-if="selecting_all() && !this.selection.is_custom" class="mr-1">public</v-icon>
-                      <v-icon v-if="selecting_group()" class="mr-1">people</v-icon>
-                      <v-icon v-if="selecting_custom()" class="mr-1">settings_applications</v-icon>
+                      <v-icon v-if="selection.type != 'group' && selection.type != 'custom'" class="mr-1">public</v-icon>
+                      <v-icon v-if="selection.type == 'group'" class="mr-1">people</v-icon>
+                      <v-icon v-if="selection.type == 'custom'" class="mr-1">settings_applications</v-icon>
                       <span v-text="selection_name"></span>
                     </v-btn>
                     <v-btn small class="sc-btn-primary ma-0 ml-2" @click="publishing()"
@@ -133,6 +133,7 @@ function($, Axios, EmojiOnArea) {
       });
       this.add_default_availables_roles()
       this.add_default_group()
+      this.selection.type = 'all'
     },
     props : ['config', 'course', 'user', 'available_roles', 'enrolled', 'groups'],
     data(){
